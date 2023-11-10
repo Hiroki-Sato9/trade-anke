@@ -10,6 +10,11 @@ class Profile extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'gender_id',
+        'age',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

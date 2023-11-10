@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+use Illuminate\Support\Facades\DB;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -20,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.register')->with(['genders' => DB::table('genders')->get()]);
     }
 
     /**
@@ -32,15 +34,12 @@ class RegisteredUserController extends Controller
     {
         // Userモデルに保存すべき値の取得
         $user_input = $request->input('user');
-        // dd($user_input);
         $request->validate([
             'user.name' => ['required', 'string', 'max:255'],
             'user.email' => ['required', 'string', 'email', 'max:255', 'unique:App\Models\User,email'],
-            // 'user.password' => ['required', 'confirmed'],
             'user.password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // dd($request);
         $user = User::create([
             'name' => $user_input['name'],
             'email' => $user_input['email'],
@@ -48,6 +47,9 @@ class RegisteredUserController extends Controller
         ]);
         
         // Profileモデルに保存すべき値の取得
+        $profile_input = $request->input('profile');
+        // dd($profile_input);
+        $user->profile()->create($profile_input);
 
         event(new Registered($user));
 
