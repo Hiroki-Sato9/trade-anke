@@ -19,14 +19,14 @@
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-text-input id="name" name="user[name]" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('user.name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-text-input id="email" name="user[email]" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('user.email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -45,6 +45,18 @@
                     @endif
                 </div>
             @endif
+        </div>
+        
+        <div>
+            <x-input-label for="gender" :value="__('Gender')" />
+            <x-text-input id="gender" name="profile[gender_id]" type="text" class="mt-1 block w-full" :value="old('gender', $user->profile->id)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile.gender_id')" />
+        </div>
+        
+        <div>
+            <x-input-label for="age" :value="__('Age')" />
+            <x-text-input id="age" name="profile[age]" type="text" class="mt-1 block w-full" :value="old('age', $user->profile->age)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile.age')" />
         </div>
 
         <div class="flex items-center gap-4">
