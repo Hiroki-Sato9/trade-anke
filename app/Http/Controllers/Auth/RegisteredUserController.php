@@ -32,23 +32,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Userモデルに保存すべき値の取得
+        // モデルごとに必要な値の取得
         $user_input = $request->input('user');
+        $profile_input = $request->input('profile');
+        
         $request->validate([
             'user.name' => ['required', 'string', 'max:255'],
             'user.email' => ['required', 'string', 'email', 'max:255', 'unique:App\Models\User,email'],
             'user.password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $request->validate([
+            'profile.gender_id' => ['required', 'numeric'],
+            'profile.age' => ['required', 'numeric', 'min:1'],
+        ]);
+        
         $user = User::create([
             'name' => $user_input['name'],
             'email' => $user_input['email'],
             'password' => Hash::make($user_input['password']),
         ]);
         
-        // Profileモデルに保存すべき値の取得
-        $profile_input = $request->input('profile');
-        // dd($profile_input);
         $user->profile()->create($profile_input);
 
         event(new Registered($user));
