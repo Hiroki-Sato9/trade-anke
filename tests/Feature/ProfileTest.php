@@ -13,6 +13,10 @@ class ProfileTest extends TestCase
     public function test_profile_page_is_displayed(): void
     {
         $user = User::factory()->create();
+        $user->profile()->create([
+            'gender_id' => 1,
+            'age' => 1
+        ]);
 
         $response = $this
             ->actingAs($user)
