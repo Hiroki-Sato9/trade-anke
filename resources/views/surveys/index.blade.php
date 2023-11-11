@@ -6,7 +6,7 @@
             @foreach ($surveys as $survey)
                 <li>
                     <div class="mb-4">
-                        <a href="#" class="text-xl">{{ $survey['title'] }}</a>
+                        <a href="/surveys/{{ $survey->id }}" class="text-xl">{{ $survey['title'] }}</a>
                         <p class="description ml-2">{{ $survey['description']}}</p>
                     </div>
                 </li>

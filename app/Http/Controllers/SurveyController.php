@@ -15,4 +15,10 @@ class SurveyController extends Controller
         return view('surveys.index')
             ->with(['surveys' => $survey->get()]);
     }
+    
+    public function show(Survey $survey)
+    {
+        return view('surveys.show')
+            ->with(['survey' => $survey]);
+    }
 }
