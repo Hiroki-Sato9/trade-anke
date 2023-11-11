@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Survey;
+
 class SurveyController extends Controller
 {
     //
-    public function index(Request $request)
+    public function index(Survey $survey)
     {
+        // dd($survey->get());
         return view('surveys.index')
-            ->with(['user' => $request->user()]);
+            ->with(['surveys' => $survey->get()]);
     }
 }
