@@ -20,7 +20,7 @@ class SurveyFactory extends Factory
     {
         return [
             //
-            'title' => fake()->title,
+            'title' => fake()->text($maxNbChars = 10),
             'description' => fake()->sentence,
             'user_id' => User::factory(),
         ];
