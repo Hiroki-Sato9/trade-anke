@@ -14,14 +14,16 @@
             <x-input-error :messages="$errors->get('survey.description')" class="mt-2" />
         </div>
         
-        <div>
-            <x-input-label for="question" :value="__('Question')" />
-            <x-text-input id="question" class="block mt-1 w-full" type="text" name="question[]" :value="old('survey.title')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('question.body')" class="mt-2" />
+        <div class="questions">
+            <div>
+                <x-input-label for="question1" :value="__('Question')" />
+                <x-text-input id="question1" class="block mt-1 w-full" type="text" name="question[]" :value="old('survey.title')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('question.body')" class="mt-2" />
+            </div>
         </div>
         
         <div class="m-3">
-            <button class="rounded-full w-12 h-12 bg-white text-xl font-bold">+</button>
+            <button class="add-question-btn rounded-full w-12 h-12 bg-white text-xl font-bold">+</button>
         </div>
     </form>
 </x-app-layout>
