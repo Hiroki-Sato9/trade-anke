@@ -21,4 +21,9 @@ class SurveyController extends Controller
         return view('surveys.show')
             ->with(['survey' => $survey]);
     }
+    
+    public function create(Request $request)
+    {
+        return view('surveys.create');
+    }
 }

@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
+    Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::get('/surveys/{survey}', [SurveyController::class, 'show']);
 });
 

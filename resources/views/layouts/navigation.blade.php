@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('surveys.index')" :active="request()->routeIs('surveys.index')">
                         {{ __('アンケートを探す') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('surveys.create')" :active="request()->routeIs('surveys.create')">
                         {{ __('アンケートを作る') }}
                     </x-nav-link>
                 </div>
