@@ -10,7 +10,7 @@
         
         <div>
             <x-input-label for="description" :value="__('Description')" />
-            <x-text-input id="description" class="block mt-1 w-full" type="text" name="survey[description]" :value="old('survey.title')" required autofocus autocomplete="name" />
+            <x-text-input id="description" class="block mt-1 w-full" type="text" name="survey[description]" :value="old('survey.description')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('survey.description')" class="mt-2" />
         </div>
         

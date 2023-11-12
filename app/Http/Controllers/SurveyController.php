@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Survey;
+use App\Http\Requests\SurveyRequest;
 
 class SurveyController extends Controller
 {
@@ -27,10 +28,11 @@ class SurveyController extends Controller
         return view('surveys.create');
     }
     
-    public function store(Request $request, Survey $survey)
+    public function store(Survey $survey, SurveyRequest $request)
     {
         $survey_input = $request['survey'];
         $question_input = $request['question'];
+        
         
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
