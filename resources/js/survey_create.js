@@ -1,4 +1,5 @@
 
+// 質問項目を増やすイベントの生成
 class AddQuestion {
     constructor() {
         this.questions = document.querySelector('.questions');
