@@ -1,6 +1,6 @@
 
 <x-app-layout>
-    <form method="post" action="#">
+    <form method="post" action="/surveys">
         @csrf
         <div>
             <x-input-label for="title" :value="__('Title')" />
@@ -11,6 +11,12 @@
         <div>
             <x-input-label for="description" :value="__('Description')" />
             <x-text-input id="description" class="block mt-1 w-full" type="text" name="survey[description]" :value="old('survey.title')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('survey.description')" class="mt-2" />
+        </div>
+        
+        <div>
+            <x-input-label for="answer_limit" :value="__('上限')" />
+            <x-text-input id="answer_limit" class="block mt-1 w-full" type="number" name="survey[answer_limit]" :value="old('survey.answer_limit')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('survey.description')" class="mt-2" />
         </div>
         

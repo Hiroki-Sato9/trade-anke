@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::get('/surveys/{survey}', [SurveyController::class, 'show']);
+    Route::post('/surveys', [SurveyController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
