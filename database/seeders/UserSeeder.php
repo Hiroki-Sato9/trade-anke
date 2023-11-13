@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Survey;
 use App\Models\Question;
+use App\Models\Profile;
 
 
 class UserSeeder extends Seeder
@@ -25,6 +26,7 @@ class UserSeeder extends Seeder
             
         User::factory()
             ->count(10)
+            ->has(Profile::factory())
             ->recycle($surveys)
             ->create();
             
