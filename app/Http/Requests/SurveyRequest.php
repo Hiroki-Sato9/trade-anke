@@ -28,7 +28,7 @@ class SurveyRequest extends FormRequest
             'survey.description' => 'required',
             'survey.answer_limit' => 'required',
             'question' => 'required|array',
-            'question.*.body' => 'required',
+            'question.*.body' => 'required|min:3',
         ];
     }
 }

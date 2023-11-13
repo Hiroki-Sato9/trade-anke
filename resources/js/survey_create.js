@@ -3,7 +3,7 @@
 class AddQuestion {
     constructor() {
         this.questions = document.querySelector('.questions');
-        this.get_template();
+        this.set_template();
         this.btn = document.querySelector('.add-question-btn');
         
         this.btn.addEventListener(('click'), () => {
@@ -12,18 +12,27 @@ class AddQuestion {
     }
     
     add() {
-        let num = this.questions.children.length;
-        this.question_template.querySelector('label').setAttribute('for', 'question' + num);
-        this.question_template.querySelector('input').setAttribute('id', 'question' + num);
-        
-        this.questions.appendChild(this.question_template);
         this.get_template();
+        let num = this.questions.children.length;
+        console.log(this.question_template);
+        this.new_question.querySelector('label').setAttribute('for', 'question' + num);
+        this.new_question.querySelector('input').setAttribute('id', 'question' + num);
+        
+        this.questions.appendChild(this.new_question);
+        this.get_template();
+        // alert(num);
+    }
+    
+    set_template() {
+        this.question_template = this.questions.querySelector('.question').cloneNode(true);
     }
     
     get_template() {
-        this.question_template = this.questions.children[0].cloneNode(true);
+        this.new_question = this.question_template.cloneNode(true);
     }
 }
 
-const ev = new AddQuestion();
+document.addEventListener('DOMContentLoaded', () => {
+    const ev = new AddQuestion();
+});
 

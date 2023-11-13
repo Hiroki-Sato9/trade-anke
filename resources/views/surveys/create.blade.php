@@ -22,17 +22,20 @@
         
         <div class="questions">
             @if(empty(old('question')))
-                <div>
+            <div class="question">
                     <x-input-label for="question0" :value="__('Question')" />
                     <x-text-input id="question0" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.0.body')" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('question.body')" class="mt-2" />
-                </div>
+                    <x-input-error :messages="$errors->get('question.0.body')" class="mt-2" />
+            </div>
             @else
                 @foreach(old('question', []) as $key => $value)
-                    <x-input-label for="question{{ $key }}" :value="__('Question')" />
-                    <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('question.body.' . $key)" class="mt-2" />
+                    <div class="question">
+                        <x-input-label for="question{{ $key }}" :value="__('Question')" />
+                        <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" required autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('question.' . $key . '.body')" class="mt-2" />
+                    </div>
                 @endforeach
+                
             @endif
         </div>
         
