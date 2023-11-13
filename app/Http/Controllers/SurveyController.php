@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Survey;
+use App\Models\Question;
 use App\Http\Requests\SurveyRequest;
 
 class SurveyController extends Controller
@@ -33,10 +34,16 @@ class SurveyController extends Controller
         $survey_input = $request['survey'];
         $question_input = $request['question'];
         
-        
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
-        // $survey->fill($survey_input)->save();
+        
+        $question_models = [];
+        foreach ($question_input as $question){
+            array_push($question_models, new Question($question));
+        }
+    
+        $survey->questions()->saveMany($question_models);
+        $survey->refresh();
         
         return redirect('/surveys/' . $survey->id);
     }
