@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::get('/surveys/{survey}', [SurveyController::class, 'show']);
     Route::post('/surveys', [SurveyController::class, 'store']);
+    
+    Route::get('/answers/{survey}', [AnswerController::class, 'create']);
+    Route::post('/answers/{survey_id}', [AnswerController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
