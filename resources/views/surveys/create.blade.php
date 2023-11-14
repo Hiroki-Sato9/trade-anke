@@ -43,6 +43,30 @@
             <input type="button" value="+" class="add-question-btn rounded-full w-12 h-12 bg-white text-xl font-bold"></input>
         </div>
         
+        <h3>アンケートを配りたい人</h3>
+        <div class="mt-4">
+            <x-input-label for="gender_id" :value="__('Gender')" />
+
+            <select class="" id="gender_id" name="survey[gender_id]">
+                @foreach ($genders as $gender)
+                    <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('survey.gender')" class="mt-2" />
+        </div>
+        
+        <div>
+            <x-input-label for="min_age" :value="__('min')" />
+            <x-text-input id="min_age" class="block mt-1 w-full" type="number" name="survey[min_age]" :value="old('survey.min_age')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('survey.min_age')" class="mt-2" />
+        </div>
+        
+        <div>
+            <x-input-label for="max_age" :value="__('max')" />
+            <x-text-input id="max_age" class="block mt-1 w-full" type="number" name="survey[max_age]" :value="old('survey.max_age')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('survey.max_age')" class="mt-2" />
+        </div>
+        
         <x-primary-button class="ml-4">
                 {{ __('作成') }}
         </x-primary-button>

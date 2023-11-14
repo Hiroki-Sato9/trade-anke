@@ -13,6 +13,9 @@ class Survey extends Model
         'title',
         'description',
         'answer_limit',
+        'gender_id',
+        'min_age',
+        'max_age',
     ];
     
     public function questions()
