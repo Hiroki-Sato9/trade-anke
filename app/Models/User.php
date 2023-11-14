@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Profile;
+use App\Models\Survey;
+use App\Models\Answer;
 
 class User extends Authenticatable
 {
@@ -53,6 +55,11 @@ class User extends Authenticatable
     public function surveys()
     {
         return $this->hasMany(Survey::class);
+    }
+    
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
     
 }

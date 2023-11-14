@@ -34,7 +34,6 @@ class SurveyController extends Controller
     
     public function store(Survey $survey, SurveyRequest $request)
     {
-        $survey_input = $request['survey'];
         $question_input = $request['question'];
         // dd($question_input);
         
@@ -43,12 +42,8 @@ class SurveyController extends Controller
         
         $question_models = [];
         foreach ($question_input as $question){
-            array_push($question_models, new Question($question));
+            // array_push($question_models, new Question($question));
         }
-    
-        $survey->questions()->saveMany($question_models);
-        $survey->refresh();
-        
         return redirect('/surveys/' . $survey->id);
     }
 }
