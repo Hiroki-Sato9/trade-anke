@@ -1,6 +1,6 @@
 
 <x-app-layout>
-   <form method="post" action="/answers/{{ $survey->id }}">
+   <form method="post" action="/answers">
        @csrf
         @foreach ($survey->questions as $question)
             <div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Answer;
 use App\Models\Survey;
+use App\Models\Question;
 
 class AnswerController extends Controller
 {
@@ -15,22 +16,18 @@ class AnswerController extends Controller
         return view('answers.answer')->with(['survey' => $survey]);
     }
     
-    public function store(Request $request, Answer $answer)
+    public function store(Request $request)
     {
-        // dd($request->survey);
-        // surveyモデルの獲得
-        $survey = Survey::find($request->survey_id);
+        $answer_input = $request['answer'];
         
-        $input = $request['answer'];
-        // dd($input);
-        $answer_models = [];
-        foreach($input as $answer){
-            array_push($answer_models, new Answer($answer));
+        foreach($answer_input as $input){
+            $question = Question::find($input['question_id']);
+            $answer = new Answer(
+                ['user_id' => $input['user_id'],
+                 'body' => $input['body'],
+            ]);
+            $question->answers()->save($answer);
         }
-        // dd($answer_models);
-        
-        $survey->answers()->saveMany($answer_models);
-        $answer->refresh();
         return redirect('/profile/');
     }
 }

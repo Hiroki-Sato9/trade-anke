@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/surveys', [SurveyController::class, 'store']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
-    Route::post('/answers/{survey_id}', [AnswerController::class, 'store']);
+    Route::post('/answers', [AnswerController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
