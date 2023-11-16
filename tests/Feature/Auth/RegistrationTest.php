@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use Database\Seeders\GenderSeeder;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -19,6 +21,8 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        $this->seed(GenderSeeder::class);
+        
         $response = $this->post('/register', [
             'user' => [
                 'name' => 'Test User',
@@ -27,7 +31,7 @@ class RegistrationTest extends TestCase
                 'password_confirmation' => 'password',
             ],
             'profile' => [
-                'gender_id' => 1,
+                'gender_id' => DB::table('genders')->where('code', 1)->value('id'),
                 'age' => 1
             ]
         ]);
