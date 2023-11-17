@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+use App\Models\Survey;
+
 class ProfileController extends Controller
 {
     /**
@@ -18,6 +20,16 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+        ]);
+    }
+    
+    public function detail(Request $request): View
+    {
+        $user = $request->user();
+        dd(Survey::created_by_user($user->id));
+        
+        return view('profile.detail', [
+            
         ]);
     }
 

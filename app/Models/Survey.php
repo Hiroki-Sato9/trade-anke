@@ -27,4 +27,10 @@ class Survey extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    // あるユーザーが作成したアンケート
+    public static function created_by_user($user_id)
+    {
+        return self::where('user_id', $user_id)->get();
+    }
 }
