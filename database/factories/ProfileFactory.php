@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 
@@ -20,7 +21,7 @@ class ProfileFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'gender_id' => 2,
+            'gender_id' => DB::table('genders')->where('code', 1)->value('id'),
             'age' => fake()->numberBetween($min=1, $max=99),
         ];
     }
