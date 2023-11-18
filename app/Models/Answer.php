@@ -26,4 +26,17 @@ class Answer extends Model
     {
         return $this->belongsTo(Question::class);
     }
+    
+    public function survey()
+    {
+        return $this->hasOneThrough(
+            Survey::class, 
+            Question::class,
+            'id',
+            'id',
+            'question_id',
+            'survey_id',
+        );
+        
+    }
 }

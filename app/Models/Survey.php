@@ -28,6 +28,18 @@ class Survey extends Model
         return $this->belongsTo(User::class);
     }
     
+    public function answers()
+    {
+        return $this->hasManyThrough(
+            Answer::class,
+            Question::class,
+            'survey_id',
+            'question_id',
+            'id',
+            'id'
+        );
+    }
+    
     // あるユーザーが作成したアンケート
     public static function created_by_user($user_id)
     {
