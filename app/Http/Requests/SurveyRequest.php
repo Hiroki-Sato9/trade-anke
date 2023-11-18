@@ -23,14 +23,14 @@ class SurveyRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this);
+        // dd($this['survey']);
         return [
             'survey.title' => 'required',
             'survey.description' => 'required',
             'survey.answer_limit' => 'required',
             'survey.gender_id' => 'required',
-            'survey.min_age' => 'required',
-            'survey.max_age' => 'required',
+            'survey.min_age' => 'required|integer',
+            'survey.max_age' => "required|integer|min:{$this['survey']['min_age']}",
             'question' => 'required|array',
             'question.*.body' => 'required|min:3',
         ];
