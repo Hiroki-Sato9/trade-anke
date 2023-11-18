@@ -26,10 +26,11 @@ class ProfileController extends Controller
     public function detail(Request $request): View
     {
         $user = $request->user();
-        dd(Survey::created_by_user($user->id));
+        $created_surveys = Survey::created_by_user($user->id);
+        // $answered_questions = 
         
         return view('profile.detail', [
-            
+            'created_surveys' => $created_surveys,
         ]);
     }
 
