@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Survey extends Model
 {
@@ -44,5 +45,13 @@ class Survey extends Model
     public static function created_by_user($user_id)
     {
         return self::where('user_id', $user_id)->get();
+    }
+    
+    // あるユーザーが回答したアンケート
+    public static function answered_by_user($user_id)
+    {
+        return self::whereHas('answers', function (Builder $query) use ($user_id) {
+            $query->where('user_id', '=', $user_id);
+        })->get();
     }
 }
