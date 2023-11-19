@@ -64,7 +64,7 @@ class User extends Authenticatable
     
     public function delivered_surveys()
     {
-        return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id');
+        return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id')->using(Delivered::class);
     }
     
     
