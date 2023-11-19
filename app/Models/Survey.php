@@ -41,6 +41,11 @@ class Survey extends Model
         );
     }
     
+    public function delivered_users()
+    {
+        return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id');
+    }
+    
     // あるユーザーが作成したアンケート
     public static function created_by_user($user_id)
     {
