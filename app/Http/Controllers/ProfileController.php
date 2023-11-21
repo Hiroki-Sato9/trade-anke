@@ -43,19 +43,20 @@ class ProfileController extends Controller
         $survey = Survey::find($request->input('survey'));
         
         $i = 0;
+        $users = [];
         foreach (User::all() as $user)
         {
             if ($i >= $num){
                 break;
             }
-            if ($survey->is_allowed_to_deliver($user)){
+            if ($survey->is_allowed_to_deliver($user) && 
+                !$survey->delivered_users->contains($user)){
                 // deliveredテーブルに登録
-                // dd($user);
-                $survey->delivered_users()->attach($user->id);
+                array_push($users, $user->id);
                 $i += 1;
             }
         }
-        $survey->refresh();
+        $survey->delivered_users()->attach($users);
         dd($survey->delivered_users);
     }
 
