@@ -43,7 +43,23 @@ class Survey extends Model
     
     public function delivered_users()
     {
-        return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id');
+        return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id')->using(Delivered::class);
+    }
+    
+    public function is_allowed_to_deliver($user)
+    {
+        if ($this->user_id == $user->id) 
+        {
+            return false;
+        }
+        // dd($user->profile());
+        if ($this->gender_id == $user->profile->gender_id
+            && $this->min_age <= $user->profile->age
+            && $this->max_age >= $user->profile->age){
+            return true;        
+        }else{
+            return false;
+        }
     }
     
     // あるユーザーが作成したアンケート

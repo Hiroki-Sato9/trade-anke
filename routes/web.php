@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/detail', [ProfileController::class, 'detail']);
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/deliver', [ProfileController::class, 'deliver']);
+    
     
     Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');

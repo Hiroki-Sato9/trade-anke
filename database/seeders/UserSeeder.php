@@ -19,16 +19,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+            
+        $users = User::factory()
+            ->count(30)
+            ->has(Profile::factory())
+            ->create();
+
         $surveys = Survey::factory()
             ->count(10)
             ->has(Question::factory()->count(5))
+            ->recycle($users)
             ->create();
-            
-        User::factory()
-            ->count(10)
-            ->has(Profile::factory())
-            ->recycle($surveys)
-            ->create();
-            
+                    
     }
 }

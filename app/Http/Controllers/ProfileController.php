@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 use App\Models\Survey;
+use App\Models\User;
+use App\Models\Delivered;
 
 class ProfileController extends Controller
 {
@@ -26,13 +28,35 @@ class ProfileController extends Controller
     public function detail(Request $request): View
     {
         $user = $request->user();
-        // $created_surveys = Survey::created_by_user($user->id);
         $answered_surveys = Survey::answered_by_user($user->id);
         
         return view('profile.detail', [
             'created_surveys' => $user->surveys,
             'answered_surveys' => $answered_surveys,
         ]);
+    }
+    
+    public function deliver(Request $request)
+    {
+        // 何人に配布するか
+        $num = $request->input('num');
+        $survey = Survey::find($request->input('survey'));
+        
+        $i = 0;
+        foreach (User::all() as $user)
+        {
+            if ($i >= $num){
+                break;
+            }
+            if ($survey->is_allowed_to_deliver($user)){
+                // deliveredテーブルに登録
+                // dd($user);
+                $survey->delivered_users()->attach($user->id);
+                $i += 1;
+            }
+        }
+        $survey->refresh();
+        dd($survey->delivered_users);
     }
 
     /**
