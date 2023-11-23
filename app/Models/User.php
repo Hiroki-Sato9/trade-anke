@@ -66,6 +66,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id')->using(Delivered::class);
     }
-    
-    
 }

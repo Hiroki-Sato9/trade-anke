@@ -31,6 +31,7 @@ class ProfileController extends Controller
         $answered_surveys = Survey::answered_by_user($user->id);
         
         return view('profile.detail', [
+            'user' => $user,
             'created_surveys' => $user->surveys,
             'answered_surveys' => $answered_surveys,
         ]);

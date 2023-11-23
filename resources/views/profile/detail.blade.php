@@ -1,5 +1,6 @@
 
 <x-app-layout>
+    <div>あなたのポイント：{{ $user->profile->point }}</div>
     <h2>あなたが作成したアンケート</h2>
     <ul>
         @foreach($created_surveys as $survey)

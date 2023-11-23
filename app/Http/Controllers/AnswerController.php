@@ -28,6 +28,7 @@ class AnswerController extends Controller
             ]);
             $question->answers()->save($answer);
         }
+        $request->user()->profile->add_point(10);
         return redirect('/profile/');
     }
 }

@@ -19,4 +19,15 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function add_point($point)
+    {
+        if ($this->point + $point < 1){
+            return false;
+        }
+        
+        $this->point += $point;
+        $this->save();
+        session()->flash('flash_message', "ポイントが変動しました");
+    }
 }
