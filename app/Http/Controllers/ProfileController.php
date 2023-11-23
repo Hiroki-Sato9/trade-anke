@@ -51,13 +51,13 @@ class ProfileController extends Controller
             }
             if ($survey->is_allowed_to_deliver($user) && 
                 !$survey->delivered_users->contains($user)){
-                // deliveredテーブルに登録
                 array_push($users, $user->id);
                 $i += 1;
             }
         }
         $survey->delivered_users()->attach($users);
-        dd($survey->delivered_users);
+        
+        return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
     }
 
     /**
