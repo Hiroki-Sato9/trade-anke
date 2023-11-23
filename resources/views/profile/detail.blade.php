@@ -24,4 +24,11 @@
         </li>
         @endforeach
     </ul>
+    
+    <h2>あなたに配られたアンケート</h2>
+    @foreach($delivered_surveys as $survey)
+        <li>
+            <a href="/answers/{{ $survey->id }}">{{ $survey->title }}</a>
+        </li>
+    @endforeach
 </x-app-layout>

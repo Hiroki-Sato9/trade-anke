@@ -34,6 +34,7 @@ class ProfileController extends Controller
             'user' => $user,
             'created_surveys' => $user->surveys,
             'answered_surveys' => $answered_surveys,
+            'delivered_surveys' => $user->delivered_surveys,
         ]);
     }
     
