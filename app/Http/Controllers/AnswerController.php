@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Gate;
 use App\Models\Answer;
 use App\Models\Survey;
 use App\Models\Question;
@@ -13,6 +13,10 @@ class AnswerController extends Controller
     //
     public function create(Survey $survey)
     {
+        if (! Gate::allows('answer-survey', $survey)) {
+            abort(403);
+        }
+        
         return view('answers.answer')->with(['survey' => $survey]);
     }
     
