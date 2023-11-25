@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+use App\Models\User;
+use App\Models\Survey;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        // アクセスしたアンケートが、そのユーザに配布されたものか
+        Gate::define('answer-survey', function (User $user, Survey $survey) {
+            return $user->delivered_surveys->contains($survey);
+        });
     }
 }

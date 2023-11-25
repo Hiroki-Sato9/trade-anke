@@ -46,6 +46,8 @@ class SurveyController extends Controller
         }
         $survey->questions()->saveMany($question_models);
         
+        $request->user()->profile->add_point(-1);
+    
         return redirect('/surveys/' . $survey->id);
     }
 }
