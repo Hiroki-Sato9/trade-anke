@@ -29,12 +29,13 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $answered_surveys = Survey::answered_by_user($user->id);
+        $delivered_surveys = $user->delivered_surveys->diff($answered_surveys);
         
         return view('profile.detail', [
             'user' => $user,
             'created_surveys' => $user->surveys,
             'answered_surveys' => $answered_surveys,
-            'delivered_surveys' => $user->delivered_surveys,
+            'delivered_surveys' => $delivered_surveys,
         ]);
     }
     
