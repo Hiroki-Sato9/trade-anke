@@ -5,37 +5,30 @@
         <form method="get" action="/surveys">
             @csrf
             <div class="mt-4">
-                <x-input-label for="gender_id" :value="__('Gender')" />
-    
+                <label for="gender_id">性別</label>
                 <select class="" id="gender_id" name="gender_id">
                     @foreach ($genders as $gender)
                         <option value="{{ $gender->id }}">{{ $gender->name }}</option>
                     @endforeach
                 </select>
-                <x-input-error :messages="$errors->get('gender_id')" class="mt-2" />
             </div>
         
             <div>
-                <x-input-label for="min_age" :value="__('min')" />
-                <x-text-input id="min_age" class="block mt-1 w-full" type="number" name="min_age" :value="old('min_age')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('min_age')" class="mt-2" />
+                <label for="min_age">min</label>
+                <input id="min_age" class="block mt-1 w-full" type="number" name="min_age" value="{{ old('min_age') }}" />
             </div>
             
             <div>
-                <x-input-label for="max_age" :value="__('max')" />
-                <x-text-input id="max_age" class="block mt-1 w-full" type="number" name="max_age" :value="old('max_age')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('max_age')" class="mt-2" />
+                <label for="max_age">max</label>
+                <input id="max_age" class="block mt-1 w-full" type="number" name="max_age" value="{{ old('max_age') }}" />
             </div>
             
             <div>
-                <x-input-label for="keyword" :value="__('keyword')" />
-                <x-text-input id="keyword" class="block mt-1 w-full" type="number" name="max_age" :value="old('keyword')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('keyword')" class="mt-2" />
+                <label for="keyword">キーワード</label>
+                <input id="keyword" class="block mt-1 w-full" type="text" name="keyword" value="{{ old('keyword') }}" />
             </div>
-            
-            <x-primary-button class="ml-4">
-                    {{ __('検索') }}
-            </x-primary-button>
+            <input type="submit" class="button primary-button ml-4" value="検索">
+            </input>
         </form> 
     </div>
     

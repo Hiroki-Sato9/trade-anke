@@ -89,11 +89,13 @@ class Survey extends Model
         if (isset($params['gender_id'])) $query->where('gender_id', $params['gender_id']);
         
         if (isset($params['min_age'])) $query->where('min_age', '<=', $params['min_age']);
-        
         if (isset($params['max_age'])) $query->where('max_age', '>=', $params['max_age']);
         
         if (isset($params['keyword'])){
-            
+            $query->where(function ($query) use ($params) {
+                $query->where('title', 'like', '%' . $params['keyword'] . '%')
+                    ->orWhere('description', 'like', '%' . $params['keyword'] . '%');
+            });
         }
         
         return $query;
