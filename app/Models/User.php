@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Profile;
 use App\Models\Survey;
 use App\Models\Answer;
@@ -65,5 +66,11 @@ class User extends Authenticatable
     public function delivered_surveys()
     {
         return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id')->using(Delivered::class);
+    }
+    
+    // ユーザの性別名を返す
+    public function gender_name()
+    {
+         return DB::table('genders')->find($this->profile->gender_id);
     }
 }

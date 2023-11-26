@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+use Illuminate\Support\Facades\DB;
+
 class Survey extends Model
 {
     use HasFactory;
@@ -74,5 +76,28 @@ class Survey extends Model
         return self::whereHas('answers', function (Builder $query) use ($user_id) {
             $query->where('user_id', '=', $user_id);
         })->get();
+    }
+    
+    // ユーザの性別名を返す
+    public function gender_name()
+    {
+         return DB::table('genders')->find($this->gender_id)->name;
+    }
+    
+    public function scopeSearch(Builder $query, $params): Builder
+    {
+        if (isset($params['gender_id'])) $query->where('gender_id', $params['gender_id']);
+        
+        if (isset($params['min_age'])) $query->where('min_age', '<=', $params['min_age']);
+        if (isset($params['max_age'])) $query->where('max_age', '>=', $params['max_age']);
+        
+        if (isset($params['keyword'])){
+            $query->where(function ($query) use ($params) {
+                $query->where('title', 'like', '%' . $params['keyword'] . '%')
+                    ->orWhere('description', 'like', '%' . $params['keyword'] . '%');
+            });
+        }
+        
+        return $query;
     }
 }
