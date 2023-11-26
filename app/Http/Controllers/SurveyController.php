@@ -12,12 +12,19 @@ use Illuminate\Support\Facades\DB;
 
 class SurveyController extends Controller
 {
-    //
+    // public $genders;
+    
+    public function __construct()
+    {
+        $this->genders =  DB::table('genders')->get();
+    }
+    
     public function index(Survey $survey)
     {
         // dd($survey->get());
         return view('surveys.index')
-            ->with(['surveys' => $survey->get()]);
+            ->with(['surveys' => $survey->get(),
+                    'genders' => $this->genders]);
     }
     
     public function show(Survey $survey)
@@ -29,7 +36,7 @@ class SurveyController extends Controller
     
     public function create(Request $request)
     {
-        return view('surveys.create')->with(['genders' => DB::table('genders')->get()]);
+        return view('surveys.create')->with(['genders' => $this->genders]);
     }
     
     public function store(Survey $survey, SurveyRequest $request)
