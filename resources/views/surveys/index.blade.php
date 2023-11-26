@@ -35,15 +35,23 @@
     
     <h1 class="text-5xl">作成されたアンケート</h1>
     <div class="contents">
-        <ul>
+        <table border="2">
+            <tr>
+                <th>アンケート名</th>
+                <th>概要</th>
+                <th>対象の性別</th>
+                <th>対象の年代</th>
+                <th>回答人数</th>
+            </tr>
             @foreach ($surveys as $survey)
-                <li>
-                    <div class="mb-4">
-                        <a href="/surveys/{{ $survey->id }}" class="text-xl">{{ $survey['title'] }}</a>
-                        <p class="description ml-2">{{ $survey['description']}}</p>
-                    </div>
-                </li>
+                <tr>
+                    <td><a href="/surveys/{{ $survey->id }}" class="text-xl">{{ $survey['title'] }}</a></td>
+                    <td>{{ $survey['description']}}</td>
+                    <td>{{ $survey->gender_name() }}</td>
+                    <td>{{ $survey->min_age }}~{{ $survey->max_age }}</td>
+                    <td>{{ "hello" }}</td>
+                </tr>
             @endforeach
-        </ul>
+        </table>
     </div>
 </x-app-layout>

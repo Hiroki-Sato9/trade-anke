@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+use Illuminate\Support\Facades\DB;
+
 class Survey extends Model
 {
     use HasFactory;
@@ -74,5 +76,11 @@ class Survey extends Model
         return self::whereHas('answers', function (Builder $query) use ($user_id) {
             $query->where('user_id', '=', $user_id);
         })->get();
+    }
+    
+    // ユーザの性別名を返す
+    public function gender_name()
+    {
+         return DB::table('genders')->find($this->gender_id)->name;
     }
 }
