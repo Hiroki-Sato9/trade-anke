@@ -83,4 +83,19 @@ class Survey extends Model
     {
          return DB::table('genders')->find($this->gender_id)->name;
     }
+    
+    public function scopeSearch(Builder $query, $params): Builder
+    {
+        if (isset($params['gender_id'])) $query->where('gender_id', $params['gender_id']);
+        
+        if (isset($params['min_age'])) $query->where('min_age', '<=', $params['min_age']);
+        
+        if (isset($params['max_age'])) $query->where('max_age', '>=', $params['max_age']);
+        
+        if (isset($params['keyword'])){
+            
+        }
+        
+        return $query;
+    }
 }

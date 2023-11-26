@@ -19,11 +19,13 @@ class SurveyController extends Controller
         $this->genders =  DB::table('genders')->get();
     }
     
-    public function index(Survey $survey)
+    public function index(Request $request)
     {
-        // dd($survey->get());
+        $params = $request->query();
+        $surveys = Survey::search($params)->get();
+        
         return view('surveys.index')
-            ->with(['surveys' => $survey->get(),
+            ->with(['surveys' => $surveys,
                     'genders' => $this->genders]);
     }
     

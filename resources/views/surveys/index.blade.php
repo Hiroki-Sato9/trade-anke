@@ -2,28 +2,35 @@
 <x-app-layout>
     <div class="search-form mb-8">
         <h2>検索フォーム</h2>
-        <form method="get" action="#">
+        <form method="get" action="/surveys">
+            @csrf
             <div class="mt-4">
                 <x-input-label for="gender_id" :value="__('Gender')" />
     
-                <select class="" id="gender_id" name="search[gender_id]">
+                <select class="" id="gender_id" name="gender_id">
                     @foreach ($genders as $gender)
                         <option value="{{ $gender->id }}">{{ $gender->name }}</option>
                     @endforeach
                 </select>
-                <x-input-error :messages="$errors->get('search.gender')" class="mt-2" />
+                <x-input-error :messages="$errors->get('gender_id')" class="mt-2" />
             </div>
         
             <div>
                 <x-input-label for="min_age" :value="__('min')" />
-                <x-text-input id="min_age" class="block mt-1 w-full" type="number" name="search[min_age]" :value="old('search.min_age')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('survey.min_age')" class="mt-2" />
+                <x-text-input id="min_age" class="block mt-1 w-full" type="number" name="min_age" :value="old('min_age')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('min_age')" class="mt-2" />
             </div>
             
             <div>
                 <x-input-label for="max_age" :value="__('max')" />
-                <x-text-input id="max_age" class="block mt-1 w-full" type="number" name="search[max_age]" :value="old('search.max_age')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('search.max_age')" class="mt-2" />
+                <x-text-input id="max_age" class="block mt-1 w-full" type="number" name="max_age" :value="old('max_age')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('max_age')" class="mt-2" />
+            </div>
+            
+            <div>
+                <x-input-label for="keyword" :value="__('keyword')" />
+                <x-text-input id="keyword" class="block mt-1 w-full" type="number" name="max_age" :value="old('keyword')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('keyword')" class="mt-2" />
             </div>
             
             <x-primary-button class="ml-4">
