@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Survey;
 use App\Models\Question;
+use App\Models\Answer;
 use App\Http\Requests\SurveyRequest;
 
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,6 @@ class SurveyController extends Controller
     
     public function show(Survey $survey)
     {
-        dd($survey->answered_users());
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),
