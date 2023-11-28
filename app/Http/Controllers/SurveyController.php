@@ -30,11 +30,23 @@ class SurveyController extends Controller
                     'genders' => $this->genders]);
     }
     
-    public function show(Survey $survey)
+    public function show(Survey $survey, Request $request)
     {
+        // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
+        if ($request->user()->is($survey->user)){
+            $answered_users = $survey->answered_users();
+            $answers_by_user = [];
+            foreach ($answered_users as $user){
+                array_push($answers_by_user, Answer::get_answers($user, $survey));
+            }
+        } else {
+            $answers_by_user = false;
+        }
+        
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),
+                    'answers_by_user' => $answers_by_user,
                    ]);
     }
     

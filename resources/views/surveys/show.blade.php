@@ -22,6 +22,7 @@
             <li>回答人数：{{ $survey->answer_num }}</li>
         </ul>
         
+        @if($answers_by_user)
         <h3>回答一覧</h3>
         <table>
             <tr>
@@ -29,8 +30,14 @@
                     <th>{{ $question->body }}</th>
                 @endforeach
             </tr>
-            
-            
+                @foreach($answers_by_user as $answers)
+                <tr>
+                    @foreach($answers as $answer)
+                        <td>{{ $answer->body }}</td>
+                    @endforeach
+                </tr>
+                @endforeach
         </table>
+        @endif
     </div>
 </x-app-layout>
