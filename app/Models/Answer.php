@@ -39,4 +39,13 @@ class Answer extends Model
         );
         
     }
+    
+    public static function get_answers($user, $survey)
+    {
+        $answers = self::with('user', 'survey')->get();
+        
+        return $answers->filter(function ($answer) use ($user, $survey) {
+            return $answer->user->is($user) && $answer->survey->is($survey);
+        });
+    }
 }
