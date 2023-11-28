@@ -1,11 +1,6 @@
 
 <x-app-layout>
     <div></div>
-    <div class="statistics mb-4">
-        <ul>
-            <li>回答人数：{{ $survey->answer_num }}</li>
-        </ul>
-    </div>
     <div class="survey">
         <h2 class="text-3xl">アンケートの対象人物</h2>
             <ul>
@@ -20,5 +15,22 @@
             </li>
         @endforeach
         </ul>
+    </div>
+    
+     <div class="statistics mb-4">
+        <ul>
+            <li>回答人数：{{ $survey->answer_num }}</li>
+        </ul>
+        
+        <h3>回答一覧</h3>
+        <table>
+            <tr>
+                @foreach ($survey->questions as $question)
+                    <th>{{ $question->body }}</th>
+                @endforeach
+            </tr>
+            
+            
+        </table>
     </div>
 </x-app-layout>

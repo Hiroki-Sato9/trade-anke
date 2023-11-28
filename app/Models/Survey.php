@@ -48,6 +48,22 @@ class Survey extends Model
         return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id')->using(Delivered::class);
     }
     
+    // このアンケートに回答したユーザ
+    public function answered_users()
+    {
+        
+        $answers = Answer::with('user')->get();
+        $users = [];
+        
+        foreach($answers as $answer){
+            if($answer->survey->is($this)){
+                array_push($users, $answer->user);
+            }
+        }
+        return $users;
+    }
+    
+    // アンケートが、ユーザに配布可能か？
     public function is_allowed_to_deliver($user)
     {
         if ($this->user_id == $user->id) 
@@ -83,6 +99,7 @@ class Survey extends Model
     {
          return DB::table('genders')->find($this->gender_id)->name;
     }
+    
     
     public function scopeSearch(Builder $query, $params): Builder
     {

@@ -31,9 +31,11 @@ class SurveyController extends Controller
     
     public function show(Survey $survey)
     {
+        dd($survey->answered_users());
         return view('surveys.show')
             ->with(['survey' => $survey,
-                    'gender' => DB::table('genders')->find($survey->gender_id)]);
+                    'gender' => DB::table('genders')->find($survey->gender_id),
+                   ]);
     }
     
     public function create(Request $request)
