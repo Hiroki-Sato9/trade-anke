@@ -35,6 +35,11 @@
                     @foreach($answers as $answer)
                         <td>{{ $answer->body }}</td>
                     @endforeach
+                    <td>
+                        <form method="post" action="/interviews/{{ $survey->id}}/request">
+                            <input type="submit" value="リクエスト" />
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
         </table>

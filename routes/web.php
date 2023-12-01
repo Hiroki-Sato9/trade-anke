@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
     Route::post('/answers', [AnswerController::class, 'store']);
+    
+    Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
+    Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request']);
+    Route::post('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept']);
 });
 
 require __DIR__.'/auth.php';
