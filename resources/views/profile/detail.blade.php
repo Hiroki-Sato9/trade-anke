@@ -20,7 +20,14 @@
     <ul>
         @foreach($answered_surveys as $survey)
         <li>
-            <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
+            <div class="flex">
+                <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
+                <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
+                    @method('put')
+                    @csrf
+                    <input class="button" type="submit" value="インタビューを受け入れる" />
+                </form>
+            </div>
         </li>
         @endforeach
     </ul>

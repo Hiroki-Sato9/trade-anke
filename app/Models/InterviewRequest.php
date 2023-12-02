@@ -13,4 +13,15 @@ class InterviewRequest extends Model
     {
         return $this->belongsTo(Survey::class);
     }
+    
+    public function accept()
+    {
+        if ($this->accepted == true){
+            return false;
+        }
+        
+        $this->accepted = true;
+        $this->save();
+        return true;
+    }
 }

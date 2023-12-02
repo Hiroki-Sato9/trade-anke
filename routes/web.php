@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\InterviewRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,9 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
     Route::post('/answers', [AnswerController::class, 'store']);
     
+    Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request'])->name('interviews.request');
+    Route::put('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept'])->name('interviews.accept');
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
-    Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request']);
-    Route::post('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept']);
 });
 
 require __DIR__.'/auth.php';
