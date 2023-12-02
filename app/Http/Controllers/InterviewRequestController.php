@@ -29,9 +29,13 @@ class InterviewRequestController extends Controller
     
     public function accept(Survey $survey, Request $request)
     {
-        dd($survey->interview_request);
-        $survey->interview_request()->accept();
+        if($survey->interview_request->accept()){
+            session()->flash('flash_message', 'インタビューのリクエストを受け入れました。');
+        }else{
+            session()->flash('flash_message', 'リクエストの受け入れに失敗しました。');
+            
+        }
         
-        return redirect()->route('profile.detail');
+        return redirect('/interviews/{$survey->id}');
     }
 }

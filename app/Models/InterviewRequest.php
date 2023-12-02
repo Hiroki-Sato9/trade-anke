@@ -14,6 +14,12 @@ class InterviewRequest extends Model
         return $this->belongsTo(Survey::class);
     }
     
+    public function requested_user()
+    {
+        return $this->belongsTo(User::class, 'requested_user_id');
+    }
+    
+    // インタビューを受け入れる
     public function accept()
     {
         if ($this->accepted == true){
@@ -23,5 +29,16 @@ class InterviewRequest extends Model
         $this->accepted = true;
         $this->save();
         return true;
+    }
+    
+    // 引数にとったユーザーが、インタビューをリクエストされているか？
+    public function is_requested_user($user)
+    {
+        
+        if ($user->is($this->requested_user)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

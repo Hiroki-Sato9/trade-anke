@@ -22,11 +22,13 @@
         <li>
             <div class="flex">
                 <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
-                <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
-                    @method('put')
-                    @csrf
-                    <input class="button" type="submit" value="インタビューを受け入れる" />
-                </form>
+                @if (isset($survey->interview_request) && $survey->interview_request->is_requested_user($user))
+                    <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
+                        @method('put')
+                        @csrf
+                        <input class="button" type="submit" value="インタビューを受け入れる" />
+                    </form>
+                @endif
             </div>
         </li>
         @endforeach
