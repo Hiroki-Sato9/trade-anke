@@ -38,4 +38,9 @@ class InterviewRequestController extends Controller
         
         return redirect('/interviews/{$survey->id}');
     }
+    
+    public function show(Survey $survey, Request $request)
+    {
+        return view('interviews.show');
+    }
 }
