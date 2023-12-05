@@ -13,10 +13,13 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto bg-white">
-            <form method="post" action="#">
-                <input type="text" name="post" />
+            <form method="post" action="/interviews/{{ $survey->id }}">
+                @csrf
+                <input type="text" name="body" />
                 <input type="submit" value="投稿" />
             </form>
         </div>
     </div>
 </x-app-layout>
+
+<script src="{{ asset('js/posts.js') }}"></script>

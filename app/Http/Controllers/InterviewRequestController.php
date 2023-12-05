@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\InterviewRequest;
 use App\Models\Survey;
+use App\Models\Post;
 
 class InterviewRequestController extends Controller
 {
@@ -41,6 +42,22 @@ class InterviewRequestController extends Controller
     
     public function show(Survey $survey, Request $request)
     {
-        return view('interviews.show');
+        $posts = $survey->interview_request->posts;
+        return view('interviews.show', [
+            'posts' => $posts,
+            'survey' => $survey,
+        ]);
+    }
+    
+    public function create(Survey $survey, Request $request)
+    {
+        $interview_request = $survey->interview_request;
+        $post = new Post();
+        $post->body = $request['body'];
+        $post->user_id = $request->user()->id;
+        
+        $interview_request->posts()->save($post);
+        // dd($post);
+        return redirect("/interviews/{$survey->id}");
     }
 }
