@@ -44,6 +44,7 @@ class InterviewRequestController extends Controller
     {
         $posts = $survey->interview_request->posts;
         return view('interviews.show', [
+            'user' => $request->user,
             'posts' => $posts,
             'survey' => $survey,
         ]);
