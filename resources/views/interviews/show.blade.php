@@ -24,6 +24,8 @@
             </form>
         </div>
     </div>
+    
+    <button>インタビュー終了</button>
 </x-app-layout>
 
 <script src="{{ asset('js/posts.js') }}"></script>
