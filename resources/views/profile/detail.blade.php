@@ -23,11 +23,15 @@
             <div class="flex">
                 <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
                 @if (isset($survey->interview_request) && $survey->interview_request->is_requested_user($user))
-                    <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
-                        @method('put')
-                        @csrf
-                        <input class="button" type="submit" value="インタビューを受け入れる" />
-                    </form>
+                    @if ($survey->interview_request->accepted == true)
+                        <a href="/interviews/{{ $survey->id }}">インタビュー部屋へ</a>
+                    @else
+                        <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
+                            @method('put')
+                            @csrf
+                            <input class="button" type="submit" value="インタビューを受け入れる" />
+                        </form>
+                    @endif
                 @endif
             </div>
         </li>
