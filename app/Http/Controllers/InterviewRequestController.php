@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\InterviewRequest;
 use App\Models\Survey;
+use App\Models\Question;
+use App\Models\Answer;
 use App\Models\Post;
 
 class InterviewRequestController extends Controller
@@ -68,12 +71,27 @@ class InterviewRequestController extends Controller
     {
         return view('interviews.select', [
             'user' => $request->user,
+            'survey' => $survey,
             'posts' => $survey->interview_request->posts,    
         ]);
     }
     
     public function store(Survey $survey, Request $request)
     {
+        DB::transaction(function () use($request, $survey) {
+            $question = new Question();
+            $question->body = $request['question'];
+            $question->is_extra = true;
+            $survey->questions()->save($question);
+            
+            $answer = new Answer();
+            $answer->body = $request['answer'];
+            $answer->user_id = $survey->interview_request->requested_user_id;
+            
+            $question->refresh()->answers()->save($answer);
+            
+        }, 5);
         
+        return redirect()->back();
     }
 }

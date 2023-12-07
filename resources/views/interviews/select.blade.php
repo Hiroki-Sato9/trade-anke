@@ -18,7 +18,8 @@
         </div>
         
         <div class="max-w-7xl mx-auto bg-white">
-            <form method="post" action="#" class="interview_form">
+            <form method="post" action="/interviews/{{ $survey->id }}/select" class="interview_form">
+                @csrf
                 <label for="question">質問</label>
                 <input type="text" name="question" id="question">
                 
