@@ -40,6 +40,7 @@ class InterviewRequestController extends Controller
         return redirect('/interviews/{$survey->id}');
     }
     
+    // インタビュー部屋を表示する
     public function show(Survey $survey, Request $request)
     {
         $posts = $survey->interview_request->posts;
@@ -50,6 +51,7 @@ class InterviewRequestController extends Controller
         ]);
     }
     
+    // 投稿の保存
     public function create(Survey $survey, Request $request)
     {
         $interview_request = $survey->interview_request;
@@ -60,5 +62,18 @@ class InterviewRequestController extends Controller
         $interview_request->posts()->save($post);
         // dd($post);
         return redirect("/interviews/{$survey->id}");
+    }
+    
+    public function select(Survey $survey, Request $request)
+    {
+        return view('interviews.select', [
+            'user' => $request->user,
+            'posts' => $survey->interview_request->posts,    
+        ]);
+    }
+    
+    public function store(Survey $survey, Request $request)
+    {
+        
     }
 }

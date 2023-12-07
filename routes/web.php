@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
     
     Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request'])->name('interviews.request');
     Route::put('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept'])->name('interviews.accept');
-    Route::post('/interviews/{survey}/select', [InterviewRequestController::class, 'select']);
+    Route::get('/interviews/{survey}/select', [InterviewRequestController::class, 'select']);
+    Route::post('/interviews/{survey}/select', [InterviewRequestController::class, 'store']);
     Route::post('/interviews/{survey}', [InterviewRequestController::class, 'create']);
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
 });
