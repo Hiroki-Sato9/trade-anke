@@ -106,7 +106,7 @@ class InterviewRequestController extends Controller
                 'id' => $post->id, 
                 'user_name' => $post->user->name,
                 'body' => $post->body,
-                'is_logged_user' => $post->user->is($request->user) ? true : false,
+                'is_logged_user' => $post->user->is($request->user()) ? true : false,
             );
         }
         
