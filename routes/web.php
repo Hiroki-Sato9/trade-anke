@@ -45,8 +45,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept'])->name('interviews.accept');
     Route::get('/interviews/{survey}/select', [InterviewRequestController::class, 'select']);
     Route::post('/interviews/{survey}/select', [InterviewRequestController::class, 'store']);
+    // 投稿をajaxで取得するAPI
+    Route::get('/interviews/{survey}/show_all', [InterviewRequestController::class, 'show_all']);
+    
     Route::post('/interviews/{survey}', [InterviewRequestController::class, 'create']);
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
+    
 });
 
 require __DIR__.'/auth.php';

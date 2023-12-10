@@ -94,4 +94,22 @@ class InterviewRequestController extends Controller
         
         return redirect()->back();
     }
+    
+    // インタビュー部屋での投稿をjsonで取得
+    public function show_all(Survey $survey, Request $request)
+    {
+        $posts = $survey->interview_request->posts;
+        $posts_array = array();
+        
+        foreach ($posts as $post){
+            $posts_array[] = array(
+                'id' => $post->id, 
+                'user_name' => $post->user->name,
+                'body' => $post->body,
+                'is_logged_user' => $post->user->is($request->user) ? true : false,
+            );
+        }
+        
+        return response()->json($posts_array);
+    }
 }
