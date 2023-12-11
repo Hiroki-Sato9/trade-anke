@@ -4,12 +4,12 @@
         <div class="flex flex-col max-w-7xl mx-auto bg-white">
             @foreach ($posts as $post)
                 @if ($post->user->is($user))
-                <div class="post request_user w-48 self-start mb-4">
+                <div class="post request_user w-48 self-end mb-4">
                     <span>{{ $post->user->name }}</span>
                     <div>{{ $post->body }}</div>
                 </div>
                 @else
-                <div class="post requested_user w-48 self-end mb-4">
+                <div class="post requested_user w-48 self-start mb-4">
                     <span>{{ $post->user->name }}</span>
                     <div>{{ $post->body }}</div>
                 </div>

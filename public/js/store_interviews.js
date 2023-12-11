@@ -4,7 +4,6 @@ const posts = document.querySelectorAll(".post");
 const question_form = document.querySelector("#question");
 const answer_form = document.querySelector("#answer");
 
-
 posts.forEach((post) => {
     post.addEventListener("click", () => {
         let post_body = post.querySelector("div").textContent;
@@ -18,3 +17,4 @@ posts.forEach((post) => {
         }
     })
 });
+

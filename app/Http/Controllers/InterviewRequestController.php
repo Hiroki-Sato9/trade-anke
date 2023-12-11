@@ -37,7 +37,6 @@ class InterviewRequestController extends Controller
             session()->flash('flash_message', 'インタビューのリクエストを受け入れました。');
         }else{
             session()->flash('flash_message', 'リクエストの受け入れに失敗しました。');
-            
         }
         
         return redirect("/interviews/{$survey->id}");
@@ -69,8 +68,9 @@ class InterviewRequestController extends Controller
     
     public function select(Survey $survey, Request $request)
     {
+        // dd($survey->interview_request->posts);
         return view('interviews.select', [
-            'user' => $request->user,
+            'user' => $request->user(),
             'survey' => $survey,
             'posts' => $survey->interview_request->posts,    
         ]);

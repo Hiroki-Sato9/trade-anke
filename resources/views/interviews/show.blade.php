@@ -12,7 +12,7 @@
         </div>
     </div>
     
-    <button>インタビュー終了</button>
+    <button onclick="location.href='{{ '/interviews/' . $survey->id . '/select'}}'">インタビュー終了</button>
 </x-app-layout>
 
 <script async src="{{ asset('js/posts.js') }}"></script>
