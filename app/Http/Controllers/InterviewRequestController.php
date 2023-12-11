@@ -40,7 +40,7 @@ class InterviewRequestController extends Controller
             
         }
         
-        return redirect('/interviews/{$survey->id}');
+        return redirect("/interviews/{$survey->id}");
     }
     
     // インタビュー部屋を表示する

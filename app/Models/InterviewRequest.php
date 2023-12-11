@@ -39,11 +39,16 @@ class InterviewRequest extends Model
     // 引数にとったユーザーが、インタビューをリクエストされているか？
     public function is_requested_user($user)
     {
-        
-        if ($user->is($this->requested_user)){
-            return true;
-        }else{
-            return false;
-        }
+        // if ($user->is($this->requested_user)){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+        return $user->is($this->requested_user);
+    }
+    
+    public function is_requst_user($user)
+    {
+        return $user->is($this->survey->user) ? true : false;
     }
 }
