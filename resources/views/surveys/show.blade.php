@@ -35,6 +35,14 @@
                     @foreach($answers as $answer)
                         <td>{{ $answer->body }}</td>
                     @endforeach
+                    <td>
+                        <form method="post" action="/interviews/request/{{ $survey->id }}">
+                            @csrf
+                            <input type="hidden" id="request_user" name="request_user" value="{{ $survey->user->id }}" />
+                            <input type="hidden" id="requested_user" name="requested_user" value="{{ $answers->first()->user->id }}" />
+                            <input type="submit" value="リクエスト" />
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
         </table>

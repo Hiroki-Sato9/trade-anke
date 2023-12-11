@@ -48,6 +48,11 @@ class Survey extends Model
         return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id')->using(Delivered::class);
     }
     
+    public function interview_request()
+    {
+        return $this->hasOne(InterviewRequest::class);
+    }
+    
     // このアンケートに回答したユーザ
     public function answered_users()
     {
