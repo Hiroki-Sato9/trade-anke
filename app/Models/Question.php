@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Survey;
@@ -25,5 +26,13 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+    
+    // グローバルスコープの適用
+    public static function booted()
+    {
+        static::addGlobalScope('extra', function (Builder $builder) {
+            $builder->where('is_extra', '=', false);
+        });
     }
 }
