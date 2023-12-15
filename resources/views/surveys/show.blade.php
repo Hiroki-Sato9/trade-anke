@@ -30,22 +30,34 @@
                     <th>{{ $question->body }}</th>
                 @endforeach
             </tr>
-                @foreach($answers_by_user as $answers)
-                <tr>
-                    @foreach($answers as $answer)
-                        <td>{{ $answer->body }}</td>
-                    @endforeach
-                    <td>
-                        <form method="post" action="/interviews/request/{{ $survey->id }}">
-                            @csrf
-                            <input type="hidden" id="request_user" name="request_user" value="{{ $survey->user->id }}" />
-                            <input type="hidden" id="requested_user" name="requested_user" value="{{ $answers->first()->user->id }}" />
-                            <input type="submit" value="リクエスト" />
-                        </form>
-                    </td>
-                </tr>
+            @foreach($answers_by_user as $answers)
+            <tr>
+                @foreach($answers as $answer)
+                    <td>{{ $answer->body }}</td>
                 @endforeach
+                <td>
+                    <form method="post" action="/interviews/request/{{ $survey->id }}">
+                        @csrf
+                        <input type="hidden" id="request_user" name="request_user" value="{{ $survey->user->id }}" />
+                        <input type="hidden" id="requested_user" name="requested_user" value="{{ $answers->first()->user->id }}" />
+                        <input type="submit" value="リクエスト" />
+                    </form>
+                </td>
+                
+                <!-- インタビュー結果を表示するボタン -->
+                @if (isset($survey->interview_request))
+                <td>
+                    <form method="get" action="#">
+                        @csrf
+                        <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
+                        <button type="button" class="submit-btn">インタビュー結果を見る</button>
+                    </form>
+                </td>
+                @endif
+            </tr>
+            @endforeach
         </table>
         @endif
     </div>
+    <div id="dialog"></div>
 </x-app-layout>
