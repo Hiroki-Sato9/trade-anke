@@ -37,7 +37,7 @@ class SurveyController extends Controller
             $answered_users = $survey->answered_users();
             $answers_by_user = [];
             foreach ($answered_users as $user){
-                array_push($answers_by_user, Answer::get_answers($user, $survey));
+                $answers_by_user[$user->id] = Answer::get_answers($user, $survey);
             }
         } else {
             $answers_by_user = false;

@@ -43,6 +43,7 @@ class Survey extends Model
         );
     }
     
+    // アンケートを配布したユーザ
     public function delivered_users()
     {
         return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id')->using(Delivered::class);
@@ -122,4 +123,25 @@ class Survey extends Model
         
         return $query;
     }
+    
+    // ユーザに、このアンケートについてインタビューを実施したか
+    public function is_interviewed_user($user_id)
+    {
+        $user = User::find($user_id);
+        $extra_questions = Question::withoutGlobalScope('extra')
+            ->where('survey_id', $this->id)
+            ->where('is_extra', true)
+            ->get();
+    
+        foreach ($extra_questions as $question) {
+            foreach ($question->answers as $answer) {
+                if ($answer->user->is($user)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    
 }

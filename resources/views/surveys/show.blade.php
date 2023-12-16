@@ -30,7 +30,7 @@
                     <th>{{ $question->body }}</th>
                 @endforeach
             </tr>
-            @foreach($answers_by_user as $answers)
+            @foreach($answers_by_user as $user_id => $answers)
             <tr>
                 @foreach($answers as $answer)
                     <td>{{ $answer->body }}</td>
@@ -45,12 +45,12 @@
                 </td>
                 
                 <!-- インタビュー結果を表示するボタン -->
-                @if (isset($survey->interview_request))
+                @if ($survey->is_interviewed_user($user_id))
                 <td>
-                    <form method="get" action="#">
+                    <form method="get" action="#" id="interview_{{ $user_id }}" class="show_form">
                         @csrf
                         <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
-                        <button type="button" class="submit-btn">インタビュー結果を見る</button>
+                        <button type="button" id="btn_{{ $user_id }}" class="show_btn">インタビュー結果を見る</button>
                     </form>
                 </td>
                 @endif
@@ -61,3 +61,5 @@
     </div>
     <div id="dialog"></div>
 </x-app-layout>
+
+<script src="{{ asset('/js/surveys/show.js') }}"></script>
