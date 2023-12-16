@@ -47,9 +47,10 @@
                 <!-- インタビュー結果を表示するボタン -->
                 @if ($survey->is_interviewed_user($user_id))
                 <td>
-                    <form method="get" action="#" id="interview_{{ $user_id }}" class="show_form">
+                    <form method="post" action="/interviews/{{ $survey->id }}/show_result" id="interview_{{ $user_id }}" class="show_form">
                         @csrf
                         <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
+                        <input type="hidden" id="" name="user_id" value="{{ $user_id }}"/>
                         <button type="button" id="btn_{{ $user_id }}" class="show_btn">インタビュー結果を見る</button>
                     </form>
                 </td>
@@ -59,7 +60,16 @@
         </table>
         @endif
     </div>
-    <div id="dialog"></div>
+    
+    <a href="#dialog" class="block w-fit">テスト</a>
+    <div id="dialog" class="hidden target:block">
+        <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
+            <a href="#" class="block w-full h-full cursor-default">
+                <div id="dialog-content" class="cw-3/4 mx-auto mt-20 bg-white relative -top-full">
+                </div>
+            </a>
+        </div>
+    </div>
 </x-app-layout>
 
 <script src="{{ asset('/js/surveys/show.js') }}"></script>

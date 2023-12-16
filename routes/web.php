@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/interviews/{survey}/select', [InterviewRequestController::class, 'store']);
     // 投稿をajaxで取得するAPI
     Route::get('/interviews/{survey}/show_all', [InterviewRequestController::class, 'show_all']);
+    // インタビュー結果を返すAPI
+    Route::post('/interviews/{survey}/show_result', [InterviewRequestController::class, 'show_result']);
     
     Route::post('/interviews/{survey}', [InterviewRequestController::class, 'create']);
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);

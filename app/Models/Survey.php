@@ -134,14 +134,34 @@ class Survey extends Model
             ->get();
     
         foreach ($extra_questions as $question) {
-            foreach ($question->answers as $answer) {
-                if ($answer->user->is($user)) {
-                    return true;
-                }
+            $answer = $question->answers()->first();
+            if ($answer->user->is($user)) {
+                return true;
             }
         }
         return false;
     }
     
+    // インタビューの結果を問い=>回答の連想配列で返す
+    public function get_interview_result($user_id)
+    {
+        $result = [];
+        
+        $user = User::find($user_id);
+        $extra_questions = Question::withoutGlobalScope('extra')
+            ->where('survey_id', $this->id)
+            ->where('is_extra', true)
+            ->get();
     
+        foreach ($extra_questions as $question) {
+            $answer = $question->answers()->first();
+            if ($answer->user->is($user)) {
+                $result[] = array(
+                    'question' => $question->body,
+                    'answer' => $answer->body,
+                );
+            }        
+        }
+        return $result;
+    }
 }

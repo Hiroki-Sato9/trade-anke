@@ -112,4 +112,11 @@ class InterviewRequestController extends Controller
         
         return response()->json($posts_array);
     }
+    
+    public function show_result(Survey $survey, Request $request)
+    {
+        $result = $survey->get_interview_result($request->user_id);
+        
+        return response()->json($result);
+    }
 }
