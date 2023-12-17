@@ -51,7 +51,7 @@
                         @csrf
                         <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
                         <input type="hidden" id="" name="user_id" value="{{ $user_id }}"/>
-                        <button type="button" id="btn_{{ $user_id }}" class="show_btn">インタビュー結果を見る</button>
+                        <a href="#dialog" id="btn_{{ $user_id }}" class="show_btn">インタビュー結果を見る</button>
                     </form>
                 </td>
                 @endif
@@ -61,13 +61,14 @@
         @endif
     </div>
     
-    <a href="#dialog" class="block w-fit">テスト</a>
+    <!--<a href="#dialog" class="block w-fit">テスト</a>-->
     <div id="dialog" class="hidden target:block">
         <div class="block w-full h-full bg-black/70 absolute top-0 left-0">
-            <a href="#" class="block w-full h-full cursor-default">
-                <div id="dialog-content" class="cw-3/4 mx-auto mt-20 bg-white relative -top-full">
+            <a href="#" class="block w-full h-full cursor-default"></a>
+                <div id="dialog-content" class="w-3/4 mx-auto mt-20 relative -top-full">
+                    <table class="text-white">
+                    </table>
                 </div>
-            </a>
         </div>
     </div>
 </x-app-layout>
