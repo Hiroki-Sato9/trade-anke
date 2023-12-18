@@ -1,6 +1,9 @@
 
 <x-app-layout>
-    <div class="search-form mb-8">
+    
+    <div class="py-12">
+    
+    <div class="search-form max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h2>検索フォーム</h2>
         <form method="get" action="/surveys">
             @csrf
@@ -32,26 +35,29 @@
         </form> 
     </div>
     
-    
-    <h1 class="text-5xl">作成されたアンケート</h1>
-    <div class="contents">
-        <table border="2">
-            <tr>
-                <th>アンケート名</th>
-                <th>概要</th>
-                <th>対象の性別</th>
-                <th>対象の年代</th>
-                <th>回答人数</th>
-            </tr>
-            @foreach ($surveys as $survey)
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
+        <h1>作成されたアンケート</h1>
+        <div class="contents">
+            <table border="2">
                 <tr>
-                    <td><a href="/surveys/{{ $survey->id }}" class="text-xl">{{ $survey['title'] }}</a></td>
-                    <td>{{ $survey['description']}}</td>
-                    <td>{{ $survey->gender_name() }}</td>
-                    <td>{{ $survey->min_age }}~{{ $survey->max_age }}</td>
-                    <td>{{ "hello" }}</td>
+                    <th>アンケート名</th>
+                    <th>概要</th>
+                    <th>対象の性別</th>
+                    <th>対象の年代</th>
+                    <th>回答人数</th>
                 </tr>
-            @endforeach
-        </table>
+                @foreach ($surveys as $survey)
+                    <tr>
+                        <td><a href="/surveys/{{ $survey->id }}" class="text-xl">{{ $survey['title'] }}</a></td>
+                        <td>{{ $survey['description']}}</td>
+                        <td>{{ $survey->gender_name() }}</td>
+                        <td>{{ $survey->min_age }}~{{ $survey->max_age }}</td>
+                        <td>{{ "hello" }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+    
     </div>
 </x-app-layout>
