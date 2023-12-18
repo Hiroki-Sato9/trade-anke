@@ -1,7 +1,7 @@
 
 <x-app-layout>
-    <div></div>
-    <div class="survey">
+    <div class="py-12">
+    <div class="survey max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h2 class="text-3xl">アンケートの対象人物</h2>
             <ul>
                 <li>性別：{{ $gender->name }}</li>
@@ -17,19 +17,24 @@
         </ul>
     </div>
     
-     <div class="statistics mb-4">
+     <div class="statistics max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <ul>
             <li>回答人数：{{ $survey->answer_num }}</li>
         </ul>
         
         @if($answers_by_user)
         <h3>回答一覧</h3>
-        <table>
+        <table class="table-auto border-spacing-3">
+            <thead>
             <tr>
                 @foreach ($survey->questions as $question)
                     <th>{{ $question->body }}</th>
                 @endforeach
+                <th>リクエスト</th>
+                <th>インタビュー</th>
             </tr>
+            </thead>
+            <tbody>
             @foreach($answers_by_user as $user_id => $answers)
             <tr>
                 @foreach($answers as $answer)
@@ -57,6 +62,7 @@
                 @endif
             </tr>
             @endforeach
+            </tbody>
         </table>
         @endif
     </div>
@@ -70,6 +76,8 @@
                     </table>
                 </div>
         </div>
+    </div>
+    
     </div>
 </x-app-layout>
 

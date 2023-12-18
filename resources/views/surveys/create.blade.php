@@ -1,6 +1,7 @@
 
 <x-app-layout>
-    <form method="post" action="/surveys">
+    <div class="py-12">
+    <form method="post" action="/surveys" class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         @csrf
         <div>
             <x-input-label for="title" :value="__('Title')" />
@@ -71,4 +72,5 @@
                 {{ __('作成') }}
         </x-primary-button>
     </form>
+    </div>
 </x-app-layout>
