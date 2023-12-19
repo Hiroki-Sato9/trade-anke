@@ -30,6 +30,12 @@
             </form>
         </div>
     </div>
+    
+    <form method="post" action="/interviews/{{ $survey->id }}">
+        @csrf
+        @method('delete')
+        <button type="submit">インタビューを終了する</button>
+    </form>
 </x-app-layout>
 
 <script src="{{ asset('js/store_interviews.js') }}"></script>

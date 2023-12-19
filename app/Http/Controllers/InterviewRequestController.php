@@ -66,6 +66,15 @@ class InterviewRequestController extends Controller
         return redirect("/interviews/{$survey->id}");
     }
     
+    public function destroy(Survey $survey, Request $request)
+    {
+        // $interview_request = ;
+        $survey->interview_request->posts()->delete();
+        $survey->interview_request()->delete();
+        
+        return redirect("/surveys/{$survey->id}");
+    }
+    
     public function select(Survey $survey, Request $request)
     {
         // dd($survey->interview_request->posts);

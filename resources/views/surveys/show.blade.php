@@ -40,6 +40,9 @@
                 @foreach($answers as $answer)
                     <td>{{ $answer->body }}</td>
                 @endforeach
+                
+                <!-- インタビュー中であれば -->
+                @if (!isset($survey->interview_request))
                 <td>
                     <form method="post" action="/interviews/request/{{ $survey->id }}">
                         @csrf
@@ -48,6 +51,9 @@
                         <input type="submit" value="リクエスト" />
                     </form>
                 </td>
+                @else
+                <td></td>
+                @endif
                 
                 <!-- インタビュー結果を表示するボタン -->
                 @if ($survey->is_interviewed_user($user_id))

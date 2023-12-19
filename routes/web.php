@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
-    Route::get('/surveys/{survey}', [SurveyController::class, 'show']);
+    Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::post('/surveys', [SurveyController::class, 'store']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
     
     Route::post('/interviews/{survey}', [InterviewRequestController::class, 'create']);
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
+    Route::delete('/interviews/{survey}', [InterviewRequestController::class, 'destroy']);
     
 });
 
