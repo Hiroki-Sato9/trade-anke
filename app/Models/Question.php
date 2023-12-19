@@ -18,6 +18,10 @@ class Question extends Model
         'body',
     ];
     
+    protected $casts = [
+        'is_extra' => 'boolean',
+    ];
+    
     public function survey()
     {
         return $this->belongsTo(Survey::class);
