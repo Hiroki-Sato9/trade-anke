@@ -86,6 +86,44 @@ class Survey extends Model
         }
     }
     
+    // アンケートの配布
+    public function deliver_survey($num) {
+        $i = 0;
+        $users = [];
+        foreach (User::all() as $user)
+        {
+            if ($i >= $num){
+                break;
+            }
+            if ($this->is_allowed_to_deliver($user) && 
+                !$this->delivered_users->contains($user)){
+                array_push($users, $user->id);
+                $i += 1;
+            }
+        }
+        $this->delivered_users()->attach($users);
+        
+        return $i;
+    }
+    
+    // テストユーザにアンケートを配布
+    public static function deliver_test($num){
+        $user = User::where('email', 'test@gmail.com')->first();;
+        
+        $i = 0;
+        foreach (static::all() as $survey){
+            if ($i >= $num){
+                break;
+            }
+            if ($survey->is_allowed_to_deliver($user) &&
+                !$survey->delivered_users->contains($user)){
+                   $survey->delivered_users()->attach($user->id);
+                   $i += 1; 
+            }
+        }
+        return $i;
+    }
+    
     // あるユーザーが作成したアンケート
     public static function created_by_user($user_id)
     {

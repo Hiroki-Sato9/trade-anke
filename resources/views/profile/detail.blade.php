@@ -8,7 +8,9 @@
     
     <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
-        <div>あなたのポイント：{{ $user->profile->point }}</div>
+        <div>あなたのポイント：
+            <span class="text-xl">{{ $user->profile->point }}</span>
+        </div>
         <h2>あなたが作成したアンケート</h2>
             <table>
                 <tr>
@@ -48,6 +50,7 @@
             <li>
                 <div class="flex">
                     <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
+    
                     @if (isset($survey->interview_request) && $survey->interview_request->is_request_user($user))
                         @if ($survey->interview_request->accepted == true)
                             <a href="/interviews/{{ $survey->id }}">インタビュー部屋へ</a>

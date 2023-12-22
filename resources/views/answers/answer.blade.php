@@ -1,6 +1,9 @@
 
 <x-app-layout>
-   <form method="post" action="/answers">
+   <div class="py-12">
+       
+       
+   <form method="post" action="/answers" class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
        @csrf
         @foreach ($survey->questions as $question)
             <div>
@@ -15,4 +18,5 @@
             {{ __('回答') }}
         </x-primary-button>
     </form>
+    </div>
 </x-app-layout>
