@@ -31,8 +31,14 @@
             <main>
                 <!--フラッシュメッセージ-->
                 @if (session('flash_message'))
-                    <div class="alert alert-success">
-                        {{ session('flash_message') }}
+                    <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white shadow-sm sm:rounded-lg">
+                            <div class="alert alert-success p-6 text-gray-900">
+                                {{ session('flash_message') }}
+                            </div>
+                        </div> 
+                    </div>
                     </div>
                 @endif
                 {{ $slot }}
