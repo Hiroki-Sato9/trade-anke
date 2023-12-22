@@ -50,7 +50,7 @@
             <input type="button" value="+" class="add-question-btn rounded-full w-12 h-12 bg-white text-xl font-bold"></input>
         </div>
         
-        <h3>アンケートを配りたい人</h3>
+        <h3 class="text-xl pb-2.5 border-b-2 border-solid border-gray-600">アンケートを配りたい人</h3>
         <div class="mt-4">
             <x-input-label for="gender_id" :value="__('Gender')" />
 
