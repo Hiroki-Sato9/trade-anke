@@ -31,6 +31,8 @@ class AnswerController extends Controller
                  'body' => $input['body'],
             ]);
             $question->answers()->save($answer);
+            $question->survey->answer_num += 1;
+            $question->survey->save();
         }
         $request->user()->profile->add_point(10);
         return redirect('/profile/');

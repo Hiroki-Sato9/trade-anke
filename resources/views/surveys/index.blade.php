@@ -57,7 +57,7 @@
                         <td>{{ $survey['description']}}</td>
                         <td>{{ $survey->gender_name() }}</td>
                         <td>{{ $survey->min_age }}~{{ $survey->max_age }}</td>
-                        <td>{{ "hello" }}</td>
+                        <td>{{ $survey->answer_num }}</td>
                     </tr>
                 @endforeach
             </table>
