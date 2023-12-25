@@ -1,6 +1,13 @@
 
 <x-app-layout>
-    <form method="post" action="/surveys">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('アンケートの作成') }}
+        </h2>
+    </x-slot>
+    
+    <div class="py-12">
+    <form method="post" action="/surveys" class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         @csrf
         <div>
             <x-input-label for="title" :value="__('Title')" />
@@ -43,7 +50,7 @@
             <input type="button" value="+" class="add-question-btn rounded-full w-12 h-12 bg-white text-xl font-bold"></input>
         </div>
         
-        <h3>アンケートを配りたい人</h3>
+        <h3 class="text-xl pb-2.5 border-b-2 border-solid border-gray-600">アンケートを配りたい人</h3>
         <div class="mt-4">
             <x-input-label for="gender_id" :value="__('Gender')" />
 
@@ -71,4 +78,5 @@
                 {{ __('作成') }}
         </x-primary-button>
     </form>
+    </div>
 </x-app-layout>

@@ -45,20 +45,21 @@ class ProfileController extends Controller
         $num = $request->input('num');
         $survey = Survey::find($request->input('survey'));
         
-        $i = 0;
-        $users = [];
-        foreach (User::all() as $user)
-        {
-            if ($i >= $num){
-                break;
-            }
-            if ($survey->is_allowed_to_deliver($user) && 
-                !$survey->delivered_users->contains($user)){
-                array_push($users, $user->id);
-                $i += 1;
-            }
-        }
-        $survey->delivered_users()->attach($users);
+        // $i = 0;
+        // $users = [];
+        // foreach (User::all() as $user)
+        // {
+        //     if ($i >= $num){
+        //         break;
+        //     }
+        //     if ($survey->is_allowed_to_deliver($user) && 
+        //         !$survey->delivered_users->contains($user)){
+        //         array_push($users, $user->id);
+        //         $i += 1;
+        //     }
+        // }
+        // $survey->delivered_users()->attach($users);
+        $i = $survey->deliver_survey($num);
         
         return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
     }

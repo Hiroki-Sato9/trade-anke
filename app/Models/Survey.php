@@ -43,6 +43,7 @@ class Survey extends Model
         );
     }
     
+    // アンケートを配布したユーザ
     public function delivered_users()
     {
         return $this->belongsToMany(User::class, 'delivered', 'survey_id', 'user_id')->using(Delivered::class);
@@ -85,6 +86,44 @@ class Survey extends Model
         }
     }
     
+    // アンケートの配布
+    public function deliver_survey($num) {
+        $i = 0;
+        $users = [];
+        foreach (User::all() as $user)
+        {
+            if ($i >= $num){
+                break;
+            }
+            if ($this->is_allowed_to_deliver($user) && 
+                !$this->delivered_users->contains($user)){
+                array_push($users, $user->id);
+                $i += 1;
+            }
+        }
+        $this->delivered_users()->attach($users);
+        
+        return $i;
+    }
+    
+    // テストユーザにアンケートを配布
+    public static function deliver_test($num){
+        $user = User::where('email', 'test@gmail.com')->first();;
+        
+        $i = 0;
+        foreach (static::all() as $survey){
+            if ($i >= $num){
+                break;
+            }
+            if ($survey->is_allowed_to_deliver($user) &&
+                !$survey->delivered_users->contains($user)){
+                   $survey->delivered_users()->attach($user->id);
+                   $i += 1; 
+            }
+        }
+        return $i;
+    }
+    
     // あるユーザーが作成したアンケート
     public static function created_by_user($user_id)
     {
@@ -121,5 +160,46 @@ class Survey extends Model
         }
         
         return $query;
+    }
+    
+    // ユーザに、このアンケートについてインタビューを実施したか
+    public function is_interviewed_user($user_id)
+    {
+        $user = User::find($user_id);
+        $extra_questions = Question::withoutGlobalScope('extra')
+            ->where('survey_id', $this->id)
+            ->where('is_extra', true)
+            ->get();
+    
+        foreach ($extra_questions as $question) {
+            $answer = $question->answers()->first();
+            if ($answer->user->is($user)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // インタビューの結果を問い=>回答の連想配列で返す
+    public function get_interview_result($user_id)
+    {
+        $result = [];
+        
+        $user = User::find($user_id);
+        $extra_questions = Question::withoutGlobalScope('extra')
+            ->where('survey_id', $this->id)
+            ->where('is_extra', true)
+            ->get();
+    
+        foreach ($extra_questions as $question) {
+            $answer = $question->answers()->first();
+            if ($answer->user->is($user)) {
+                $result[] = array(
+                    'question' => $question->body,
+                    'answer' => $answer->body,
+                );
+            }        
+        }
+        return $result;
     }
 }

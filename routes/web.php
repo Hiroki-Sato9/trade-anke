@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
-    Route::get('/surveys/{survey}', [SurveyController::class, 'show']);
+    Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::post('/surveys', [SurveyController::class, 'store']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
@@ -47,9 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/interviews/{survey}/select', [InterviewRequestController::class, 'store']);
     // 投稿をajaxで取得するAPI
     Route::get('/interviews/{survey}/show_all', [InterviewRequestController::class, 'show_all']);
+    // インタビュー結果を返すAPI
+    Route::post('/interviews/{survey}/show_result', [InterviewRequestController::class, 'show_result']);
     
     Route::post('/interviews/{survey}', [InterviewRequestController::class, 'create']);
     Route::get('/interviews/{survey}', [InterviewRequestController::class, 'show']);
+    Route::delete('/interviews/{survey}', [InterviewRequestController::class, 'destroy']);
     
 });
 

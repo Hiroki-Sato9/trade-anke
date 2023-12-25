@@ -47,7 +47,7 @@ class InterviewRequest extends Model
         return $user->is($this->requested_user);
     }
     
-    public function is_requst_user($user)
+    public function is_request_user($user)
     {
         return $user->is($this->survey->user) ? true : false;
     }

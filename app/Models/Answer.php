@@ -42,10 +42,11 @@ class Answer extends Model
     
     public static function get_answers($user, $survey)
     {
-        $answers = self::with('user', 'survey')->get();
+        $answers = self::with('user', 'survey', 'question')->get();
         
         return $answers->filter(function ($answer) use ($user, $survey) {
-            return $answer->user->is($user) && $answer->survey->is($survey);
+            return $answer->question && $answer->question->is_extra == false 
+                && $answer->user->is($user) && $answer->survey->is($survey);
         });
     }
 }
