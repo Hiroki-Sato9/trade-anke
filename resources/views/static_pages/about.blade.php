@@ -15,16 +15,29 @@
     </head>
     <body>
         <div class="py-12">
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
             <h1 class="text-5xl">タイトル</h1>
-            <p>概要文</p>
-            <button class="bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2">ユーザー登録</button>
+            <p class="mb-4">概要文</p>
+            <span>ユーザー登録をしてアンケート調査をはじめましょう</span>
+            <button class="bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-8">ユーザー登録</button>
             <h2 class="text-4xl">Trade-Ankeで できること</h2>
             <ul class="list-none">
                 <li>
                     <div class="content">
-                        <h3></h3>
-                        <p></p>
+                        <h3 class="text-3xl">他人のアンケートを答えるたびにポイントをゲット！</h3>
+                        <p>説明文</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <h3 class="text-3xl">性別・年代を指定してアンケートを配布！</h3>
+                        <p>説明文</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <h3 class="text-3xl">気になった回答者にインタビューができる！</h3>
+                        <p>説明文</p>
                     </div>
                 </li>
             </ul>
