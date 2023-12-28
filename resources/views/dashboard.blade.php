@@ -12,6 +12,22 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+            <h1 class="text-5xl py-5 mb-3">ようこそ</h1>
+            <p class="text-lg mb-12">このサービスの使い方を説明します</p>
+            <ul class="list-none">
+                <li class="mb-6">
+                    <h2 class="text-4xl border-t py-4 mb-4">手順１：配られたアンケートに答えてみよう</h2>
+                    <p><a href="#">ここ</a>で、あなたのプロフィールと合致したアンケートが配られます。</p>
+                </li>
+                <li class="mb-6">
+                    <h2 class="text-4xl border-t py-4 mb-4">手順２：アンケートを作ってみよう</h2>
+                    <p><a href="#">ここ</a>で、アンケートを作成することができます。</p>
+                </li>
+                <li class="mb-6">
+                    <h2 class="text-4xl border-t py-4 mb-4">手順３：アンケートを配ってみよう</h2>
+                    <p>作成したアンケートは、自分が持っているポイントと引き換えに誰かに届けることができます。</p>
+                </li>
+            </ul>
         </div>
     </div>
 </x-app-layout>
