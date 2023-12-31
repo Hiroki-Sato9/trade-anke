@@ -68,7 +68,7 @@
         </ul>
     </div>
     
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
+    <div id="delivered_surveys" class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h2 class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">あなたに配られたアンケート</h2>
         @foreach($delivered_surveys as $survey)
             <li>

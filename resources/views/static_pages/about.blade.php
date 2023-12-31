@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <div class="py-36">
+        <div class="py-36 bg-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
             <h1 class="text-5xl mb-3">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
             <p class="text-lg mb-12">このサービスでは、自分が作成したアンケートを配布することができます。</p>
@@ -31,11 +31,12 @@
             </div>
             <div class="items-center pb-6">
                 <span>すでにアカウントを持っている場合</span>
-                <a href=" {{ route('login') }}" clas="bg-blue">ログイン</a>
+                <a href=" {{ route('login') }}" class="bg-blue">ログイン</a>
             </div>
+            
             <h2 class="text-4xl border-t py-4 mb-4">Trade-Ankeで できること</h2>
             <ul class="list-none">
-                <li class="mb-6 h-80 pt-10">
+                <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">アンケートを簡単に作成できる！</h3>
                         <p class="text-lg">
@@ -43,7 +44,7 @@
                         </p>
                     </div>
                 </li>
-                <li class="mb-6 h-80 pt-10">
+                <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">アンケートを答えるたびにポイントをゲット！</h3>
                         <p class="text-lg">
@@ -52,13 +53,13 @@
                         </p>
                     </div>
                 </li>
-                <li class="mb-6  h-80 pt-10">
+                <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">性別・年代を指定してアンケートを配布！</h3>
                         <p class="text-lg">アンケートを届けたい人たちに、実際にアンケートを届けることができます。</p>
                     </div>
                 </li>
-                <li class="mb-6  h-80 pt-10">
+                <li class="bg-white shadow-sm p-6 mb-6  h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">気になった回答者にインタビューができる！</h3>
                         <p class="text-lg">届いたアンケート回答のうち、気になった回答者にインタビューを申し込むことができます。</p>
