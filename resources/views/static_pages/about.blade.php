@@ -20,18 +20,18 @@
             <p class="text-lg mb-12">このサービスでは、自分が作成したアンケートを配布することができます。</p>
             
             <div class="flex justify-around">
-                <div class="flex flex-col">
+                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
                     <span>ユーザー登録をしてアンケート調査をはじめましょう</span>
                     <button onclick="location.href='{{ route('register') }}'" class="w-2/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">ユーザー登録</button>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
                     <span>作成されたアンケートを見る</span>
-                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-3/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
+                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-4/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
                 </div>
             </div>
             <div class="items-center pb-6">
                 <span>すでにアカウントを持っている場合</span>
-                <a href=" {{ route('login') }}" class="bg-blue">ログイン</a>
+                <a href=" {{ route('login') }}" class="text-blue-900">ログイン</a>
             </div>
             
             <h2 class="text-4xl border-t py-4 mb-4">Trade-Ankeで できること</h2>

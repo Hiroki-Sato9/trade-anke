@@ -43,7 +43,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h1 class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">作成されたアンケート</h1>
         <div class="contents">
-            <table border="2">
+            <table border="2" class="w-full text-left rtl:text-right">
                 <tr>
                     <th>アンケート名</th>
                     <th>概要</th>
