@@ -19,6 +19,11 @@ class InterviewRequest extends Model
         return $this->belongsTo(User::class, 'requested_user_id');
     }
     
+    public function request_user()
+    {
+        return $this->belongsTo(User::class, 'request_user_id');
+    }
+    
     public function posts()
     {
         return $this->hasMany(Post::class);

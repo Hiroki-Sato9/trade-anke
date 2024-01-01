@@ -68,9 +68,15 @@ class InterviewRequestController extends Controller
     
     public function destroy(Survey $survey, Request $request)
     {
+        // ポイントの変動
+        $survey->interview_request->requested_user->profile->add_point(10);
+        $survey->interview_request->request_user->profile->add_point(-10);
+        
         // $interview_request = ;
         $survey->interview_request->posts()->delete();
         $survey->interview_request()->delete();
+        
+        
         
         return redirect("/surveys/{$survey->id}");
     }
