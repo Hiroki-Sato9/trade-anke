@@ -32,7 +32,7 @@
                         <td>
                             @if (isset($survey->interview_request))
                                 @if ($survey->interview_request->accepted == true)
-                                    <a href="/interviews/{{ $survey->id }}" class="hover:bg-sky-700">インタビュー部屋へ</a>
+                                    <a href="/interviews/{{ $survey->id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">インタビュー部屋へ</a>
                                 @else
                                     <div>リクエスト中</div>
                                 @endif
@@ -49,16 +49,16 @@
             @foreach($answered_surveys as $survey)
             <li>
                 <div class="flex">
-                    <a href="/surveys/{{ $survey->id }}">{{ $survey->title }}</a>
+                    <a href="/surveys/{{ $survey->id }}" class="mr-4">{{ $survey->title }}</a>
     
-                    @if (isset($survey->interview_request) && $survey->interview_request->is_request_user($user))
+                    @if (isset($survey->interview_request) && $survey->interview_request->is_requested_user($user))
                         @if ($survey->interview_request->accepted == true)
-                            <a href="/interviews/{{ $survey->id }}">インタビュー部屋へ</a>
+                            <a href="/interviews/{{ $survey->id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">インタビュー部屋へ</a>
                         @else
                             <form method="post" action="{{ route('interviews.accept', ['survey' => $survey->id], false) }}">
                                 @method('put')
                                 @csrf
-                                <input class="button" type="submit" value="インタビューを受け入れる" />
+                                <button type="submit" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" value="インタビューを受け入れる">インタビューを受け入れる</button>
                             </form>
                         @endif
                     @endif
