@@ -37,9 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/deliver', [ProfileController::class, 'deliver']);
     
     
-    Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
+    // Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
+    // Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
-    Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::post('/surveys', [SurveyController::class, 'store']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
@@ -59,5 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/interviews/{survey}', [InterviewRequestController::class, 'destroy']);
     
 });
+
+Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
+Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
 
 require __DIR__.'/auth.php';
