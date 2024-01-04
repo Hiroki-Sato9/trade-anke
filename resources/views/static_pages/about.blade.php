@@ -26,7 +26,7 @@
                 </div>
                 <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
                     <span>作成されたアンケートを見る</span>
-                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-4/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
+                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-full bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
                 </div>
             </div>
             <div class="items-center pb-6">

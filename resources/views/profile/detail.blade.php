@@ -11,7 +11,7 @@
         <div>あなたのポイント：
             <span class="text-xl">{{ $user->profile->point }}</span>
         </div>
-        <h2 class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">あなたが作成したアンケート</h2>
+        <h2 id="created_surveys" class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">あなたが作成したアンケート</h2>
             <table>
                 <tr>
                     <th>アンケート</th>

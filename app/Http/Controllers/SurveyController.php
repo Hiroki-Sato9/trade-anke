@@ -33,14 +33,12 @@ class SurveyController extends Controller
     public function show(Survey $survey, Request $request)
     {
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
+        $answers_by_user = [];
         if ($request->user() && $request->user()->is($survey->user)){
             $answered_users = $survey->answered_users();
-            $answers_by_user = [];
             foreach ($answered_users as $user){
                 $answers_by_user[$user->id] = Answer::get_answers($user, $survey);
             }
-        } else {
-            $answers_by_user = false;
         }
         
         return view('surveys.show')

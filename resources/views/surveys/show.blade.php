@@ -28,56 +28,61 @@
             </ul>
         </div>
         
-        @if($answers_by_user)
-        <div class="bg-white shadow-sm p-6">
-            <h3 class="text-2xl">回答一覧</h3>
-            <table class="w-full text-left rtl:text-right ">
-                <thead class="">
+        @if(Auth::user()->is($survey->user))
+            @if($answers_by_user)
+            <div class="bg-white shadow-sm p-6">
+                <div class="flex items-end">
+                    <h3 class="text-2xl block mr-8">回答一覧</h3>
+                    <a href="{{ route('profile.detail') }}#created_surveys" class="text-blue-700">アンケートを配布する</a>
+                </div>
+                <table class="w-full text-left rtl:text-right ">
+                    <thead class="">
+                        <tr>
+                            @foreach ($survey->questions as $question)
+                                <th class="px-6 py-3">{{ $question->body }}</th>
+                            @endforeach
+                            <th class="px-6 py-3">リクエスト</th>
+                            <th class="px-6 py-3">インタビュー</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($answers_by_user as $user_id => $answers)
                     <tr>
-                        @foreach ($survey->questions as $question)
-                            <th class="px-6 py-3">{{ $question->body }}</th>
+                        @foreach($answers as $answer)
+                            <td class="px-6 py-3">{{ $answer->body }}</td>
                         @endforeach
-                        <th class="px-6 py-3">リクエスト</th>
-                        <th class="px-6 py-3">インタビュー</th>
+                        
+                        <!-- インタビュー中であれば -->
+                        @if (!isset($survey->interview_request))
+                        <td class="px-6 py-3">
+                            <form method="post" action="/interviews/request/{{ $survey->id }}">
+                                @csrf
+                                <input type="hidden" id="request_user" name="request_user" value="{{ $survey->user->id }}" />
+                                <input type="hidden" id="requested_user" name="requested_user" value="{{ $answers->first()->user->id }}" />
+                                <input type="submit" value="リクエスト" />
+                            </form>
+                        </td>
+                        @else
+                        <td class="px-6 py-3"></td>
+                        @endif
+                        
+                        <!-- インタビュー結果を表示するボタン -->
+                        @if ($survey->is_interviewed_user($user_id))
+                        <td class="px-6 py-3">
+                            <form method="post" action="/interviews/{{ $survey->id }}/show_result" id="interview_{{ $user_id }}" class="show_form">
+                                @csrf
+                                <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
+                                <input type="hidden" id="" name="user_id" value="{{ $user_id }}"/>
+                                <a href="#dialog" id="btn_{{ $user_id }}" class="show_btn text-blue-700">インタビュー結果を見る</button>
+                            </form>
+                        </td>
+                        @endif
                     </tr>
-                </thead>
-                <tbody>
-                @foreach($answers_by_user as $user_id => $answers)
-                <tr>
-                    @foreach($answers as $answer)
-                        <td class="px-6 py-3">{{ $answer->body }}</td>
-                    @endforeach
-                    
-                    <!-- インタビュー中であれば -->
-                    @if (!isset($survey->interview_request))
-                    <td class="px-6 py-3">
-                        <form method="post" action="/interviews/request/{{ $survey->id }}">
-                            @csrf
-                            <input type="hidden" id="request_user" name="request_user" value="{{ $survey->user->id }}" />
-                            <input type="hidden" id="requested_user" name="requested_user" value="{{ $answers->first()->user->id }}" />
-                            <input type="submit" value="リクエスト" />
-                        </form>
-                    </td>
-                    @else
-                    <td class="px-6 py-3"></td>
-                    @endif
-                    
-                    <!-- インタビュー結果を表示するボタン -->
-                    @if ($survey->is_interviewed_user($user_id))
-                    <td class="px-6 py-3">
-                        <form method="post" action="/interviews/{{ $survey->id }}/show_result" id="interview_{{ $user_id }}" class="show_form">
-                            @csrf
-                            <input type="hidden" id="" name="survey_id" value="{{ $survey->id }}"/>
-                            <input type="hidden" id="" name="user_id" value="{{ $user_id }}"/>
-                            <a href="#dialog" id="btn_{{ $user_id }}" class="show_btn text-blue-700">インタビュー結果を見る</button>
-                        </form>
-                    </td>
-                    @endif
-                </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
+        @endif
         @endif
     </div>
     
