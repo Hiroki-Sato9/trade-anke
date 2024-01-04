@@ -124,6 +124,19 @@ class Survey extends Model
         return $i;
     }
     
+    // あるユーザにアンケートを配る
+    public static function deliver_to_user($user){
+        foreach (static::all() as $survey){
+            if ($survey->is_allowed_to_deliver($user) &&
+                !$survey->delivered_users->contains($user)){
+                   $survey->delivered_users()->attach($user->id);
+                   return true;
+            }
+        }
+        return false;
+        
+    }
+    
     // あるユーザーが作成したアンケート
     public static function created_by_user($user_id)
     {

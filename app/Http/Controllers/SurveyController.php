@@ -88,4 +88,15 @@ class SurveyController extends Controller
             return Redirect::route('profile.detail')->with('flash_message', "ポイントが足りません");
         }
     }
+    
+    public function take(Request $request)
+    {
+        $result = Survey::deliver_to_user($request->user);
+        
+        if ($result) {
+            return Redirect::route('profile.detail')->with('flash_message', "アンケートを付与しました");
+        } else {
+            return Redirect::route('profile.detail')->with('flash_message', "あなたが回答できるアンケートがありません");
+        }
+    }
 }
