@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Models\Survey;
 use App\Models\Question;
@@ -70,5 +71,21 @@ class SurveyController extends Controller
         $request->user()->profile->add_point(-1);
     
         return redirect('/surveys/' . $survey->id);
+    }
+    
+    public function deliver(Request $request)
+    {
+        // 何人に配布するか
+        $num = $request->input('num');
+        $survey = Survey::find($request->input('survey'));
+        
+        // ポイントが条件を満たしているか
+        if ($request->user()->profile->point > $num) {
+            $i = $survey->deliver_survey($num);
+            $request->user()->profile->add_point(-$i);
+            return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
+        } else {
+            return Redirect::route('profile.detail')->with('flash_message', "ポイントが足りません");
+        }
     }
 }

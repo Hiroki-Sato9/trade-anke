@@ -88,22 +88,22 @@ class Survey extends Model
     
     // アンケートの配布
     public function deliver_survey($num) {
-        $i = 0;
+        $delivered_num = 0;
         $users = [];
         foreach (User::all() as $user)
         {
-            if ($i >= $num){
+            if ($delivered_num >= $num){
                 break;
             }
             if ($this->is_allowed_to_deliver($user) && 
                 !$this->delivered_users->contains($user)){
                 array_push($users, $user->id);
-                $i += 1;
+                $delivered_num += 1;
             }
         }
         $this->delivered_users()->attach($users);
         
-        return $i;
+        return $delivered_num;
     }
     
     // テストユーザにアンケートを配布
