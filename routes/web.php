@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/deliver', [SurveyController::class, 'deliver']);
+    Route::put('/take', [SurveyController::class, 'take']);
     
     
     // Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');

@@ -89,9 +89,10 @@ class SurveyController extends Controller
         }
     }
     
+    // ユーザがアンケートを受け取る
     public function take(Request $request)
     {
-        $result = Survey::deliver_to_user($request->user);
+        $result = Survey::deliver_to_user($request->user());
         
         if ($result) {
             return Redirect::route('profile.detail')->with('flash_message', "アンケートを付与しました");
