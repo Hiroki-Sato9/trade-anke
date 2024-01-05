@@ -14,19 +14,34 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
+        <header class="flex flex-row justify-between bg-blue-100 text-xl py-9">
+            <h1>Trade Anke</h1>
+            <nav>
+                <ul class="flex felx-row">
+                    @auth
+                    <li class="ml-9"><a href="#">ログアウト</a></li>
+                    @endauth
+                    @guest
+                    <li class="ml-9"><a href="#">ログイン</a></li>
+                    @endguest
+                    <li class="ml-9"><a href="#">アンケートを探す</a></li>
+                    <li class="ml-9"><a href="#"></a></li>
+                </ul>
+            </nav>
+        </header>
         <div class="py-36 bg-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
             <h1 class="text-5xl mb-3">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
-            <p class="text-lg mb-12">このサービスでは、自分が作成したアンケートを配布することができます。</p>
+            <p class="text-lg mb-20">このサービスでは、自分が作成したアンケートを配布することができます。</p>
             
             <div class="flex justify-around">
-                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
+                <div class="flex items-center justify-center flex-col basis-2/5 bg-white shadow-sm p-2">
                     <span>ユーザー登録をしてアンケート調査をはじめましょう</span>
                     <button onclick="location.href='{{ route('register') }}'" class="w-2/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">ユーザー登録</button>
                 </div>
-                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
+                <div class="flex items-center justify-center flex-col basis-2/5 bg-white shadow-sm p-2">
                     <span>作成されたアンケートを見る</span>
-                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-full bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
+                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-2/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
                 </div>
             </div>
             <div class="items-center pb-6">

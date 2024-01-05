@@ -18,7 +18,10 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <div class="flex flex-row">
+                <x-input-label for="password" :value="__('Password')" />
+                <span class="text-sm">（8文字以上）</span>
+            </div>
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
