@@ -59,8 +59,9 @@
                         </p>
                     </div>
                 </li>
-                <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
-                    <div class="content">
+                <li class="flex justify-between bg-white shadow-sm p-6 mb-6 h-80 pt-10">
+                    <img class="basis-2/5" src="{{ asset('img/static_pages/img1.jpg') }}" alt="">
+                    <div class="content basis-1/2">
                         <h3 class="text-3xl mb-3">アンケート調査を行うときのハードル</h3>
                         <p class="text-xl">
                             アンケート調査を行うときの最大のハードルとは、「自分が調査のターゲットにしたい人を一定数集めること」です。<br>
