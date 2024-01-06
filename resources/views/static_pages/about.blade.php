@@ -49,11 +49,11 @@
                 <a href=" {{ route('login') }}" class="text-blue-900">ログイン</a>
             </div>
             
-            <h2 class="text-4xl border-t py-4 mb-4">Trade-Ankeで できること</h2>
+            <h2 class="text-4xl border-t py-4 mb-4">どんなサービス？</h2>
             <ul class="list-none">
                 <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
-                        <h3 class="text-3xl mb-3">アンケートを簡単に作成できる！</h3>
+                        <h3 class="text-3xl mb-3">アンケートを簡単に作成・配布できるサービスです</h3>
                         <p class="text-lg">
                             サイト内のフォームにて簡単に質問フォームを作成できます。
                         </p>
@@ -61,23 +61,34 @@
                 </li>
                 <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
-                        <h3 class="text-3xl mb-3">アンケートを答えるたびにポイントをゲット！</h3>
-                        <p class="text-lg">
-                            ゲットしたポイントは、アンケートの配布やインタビュー調査をするときに必要になります。<br>
-                            
+                        <h3 class="text-3xl mb-3">アンケート調査を行うときのハードル</h3>
+                        <p class="text-xl">
+                            アンケート調査を行うときの最大のハードルとは、「自分が調査のターゲットにしたい人を一定数集めること」です。<br>
+                            学生のように周りに同年代の人たちしかいなかったり、時間やお金をかけられない場合、<br>アンケート調査を行うことはとても
+                            ハードルが高いものとなります。
                         </p>
                     </div>
                 </li>
                 <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
-                        <h3 class="text-3xl mb-3">性別・年代を指定してアンケートを配布！</h3>
-                        <p class="text-lg">アンケートを届けたい人たちに、実際にアンケートを届けることができます。</p>
+                        <h3 class="text-3xl mb-3">アンケートを作りたい人同士が答え合う仕組み</h3>
+                        <p class="text-xl">
+                            この課題を解決するためにこのサービスは作られました。<br>
+                            このサービスでは、自分が作ったアンケートを配るときに「ポイント」を必要とします。<br>
+                            このポイントは、配られた誰かのアンケートに答えたり、インタビューを受けたときにのみ獲得することができます。<br>
+                            こうすることで、アンケート調査をしたい人たちがお互いにアンケートを答える仕組みができあがりました。
+                            
+                        </p>
                     </div>
                 </li>
                 <li class="bg-white shadow-sm p-6 mb-6  h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">気になった回答者にインタビューができる！</h3>
-                        <p class="text-lg">届いたアンケート回答のうち、気になった回答者にインタビューを申し込むことができます。</p>
+                        <p class="text-lg">
+                            インタビュー調査もまたハードルが高い調査法のひとつです。<br>
+                            しかしこのTrade-Ankeでは、自分が出したアンケートの結果を見て、面白いと思った人にインタビューの申し込みができます。<br>
+                            顔を合わせず、インタビューができることも、このwebサービスの特徴です。
+                        </p>
                     </div>
                 </li>
             </ul>
