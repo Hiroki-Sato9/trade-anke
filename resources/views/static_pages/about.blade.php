@@ -31,8 +31,8 @@
         </header>
         <div class="py-36 bg-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
-            <h1 class="text-5xl mb-3">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
-            <p class="text-lg mb-20">このサービスでは、自分が作成したアンケートを配布することができます。</p>
+            <h1 class="text-5xl mb-3 text-center">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
+            <p class="text-lg mb-20 text-center">このサービスでは、自分が作成したアンケートを配布することができます。</p>
             
             <div class="flex justify-around">
                 <div class="flex items-center justify-center flex-col basis-2/5 bg-white shadow-sm p-2">

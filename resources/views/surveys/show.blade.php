@@ -2,6 +2,11 @@
 <x-app-layout>
     <div class="py-12">
     <div class="survey max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
+        <h1 class="text-5xl">{{ $survey->title }}</h1>
+         <div class="bg-white shadow-sm p-6">
+            <h2 class="text-3xl">概要</h2>
+            <p>{{ $survey->description }}</p>
+         </div>
         <div class="bg-white shadow-sm p-6">
             <h2 class="text-3xl">アンケートの対象人物</h2>
                 <ul>
@@ -28,6 +33,7 @@
             </ul>
         </div>
         
+        @auth
         @if(Auth::user()->is($survey->user))
             @if($answers_by_user)
             <div class="bg-white shadow-sm p-6">
@@ -84,6 +90,7 @@
         </div>
         @endif
         @endif
+        @endauth
     </div>
     
     <!--<a href="#dialog" class="block w-fit">テスト</a>-->
