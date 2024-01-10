@@ -14,21 +14,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <header class="flex flex-row justify-between bg-blue-100 text-xl py-9">
-            <h1>Trade Anke</h1>
-            <nav>
-                <ul class="flex felx-row">
-                    @auth
-                    <li class="ml-9"><a href="#">ログアウト</a></li>
-                    @endauth
-                    @guest
-                    <li class="ml-9"><a href="#">ログイン</a></li>
-                    @endguest
-                    <li class="ml-9"><a href="#">アンケートを探す</a></li>
-                    <li class="ml-9"><a href="#"></a></li>
-                </ul>
-            </nav>
-        </header>
+        @if(Auth::check())
+            @include('layouts.navigation')
+        @else
+            @include('layouts.guest_nav')
+        @endif
+            
         <div class="py-36 bg-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
             <h1 class="text-5xl mb-3 text-center">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>

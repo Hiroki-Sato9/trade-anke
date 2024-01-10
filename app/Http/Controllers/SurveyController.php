@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+// use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use App\Models\Survey;
 use App\Models\Question;
@@ -11,6 +12,8 @@ use App\Models\Answer;
 use App\Http\Requests\SurveyRequest;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+
 
 class SurveyController extends Controller
 {
@@ -99,5 +102,33 @@ class SurveyController extends Controller
         } else {
             return Redirect::route('profile.detail')->with('flash_message', "あなたが回答できるアンケートがありません");
         }
+    }
+    
+    public function export(Request $request)
+    {
+        // dd($request);
+        // $headers = [
+        //     'Content-type'        => 'text/csv',
+        //     'Content-Disposition' => 'attachment; filename=export.csv',
+        //     'Pragma'              => 'no-chache',
+        //     'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+        //     'Expires'             => '0'
+        // ];
+        
+        // $callback = function () {
+        //     $handle = fopen('php://output', 'w');
+        //     fputscsv($handle, ['Test']);
+            
+        //     fclose($handle);
+        // };
+        
+        return response()->streamDownload(function () {
+            $handle = fopen('php://output', 'w');
+            $list = [[1, 'hoge'], [2, 'piyo'], [3, 'fuga']];
+            foreach ($list as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+        }, 'sample.csv');
     }
 }

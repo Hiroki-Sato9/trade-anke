@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::post('/surveys', [SurveyController::class, 'store']);
+    Route::get('/export', [SurveyController::class, 'export']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
     Route::post('/answers', [AnswerController::class, 'store']);

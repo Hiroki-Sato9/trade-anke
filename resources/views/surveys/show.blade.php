@@ -37,9 +37,13 @@
         @if(Auth::user()->is($survey->user))
             @if($answers_by_user)
             <div class="bg-white shadow-sm p-6">
-                <div class="flex items-end">
+                <div class="w-1/2 flex items-end justify-between">
                     <h3 class="text-2xl block mr-8">回答一覧</h3>
                     <a href="{{ route('profile.detail') }}#created_surveys" class="text-blue-700">アンケートを配布する</a>
+                    <form method="get" action="/export">
+                        <input type="hidden" name="survey" value={{ $survey->id }}>
+                        <button type="submit" class="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">CSV形式でエクスポート</button>
+                    </form>
                 </div>
                 <table class="w-full text-left rtl:text-right ">
                     <thead class="">
