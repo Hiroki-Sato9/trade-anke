@@ -39,10 +39,7 @@ class SurveyController extends Controller
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
         $answers_by_user = [];
         if ($request->user() && $request->user()->is($survey->user)){
-            $answered_users = $survey->answered_users();
-            foreach ($answered_users as $user){
-                $answers_by_user[$user->id] = Answer::get_answers($user, $survey);
-            }
+            $answers_by_user = Answer::answers_by_user($survey);
         }
         
         return view('surveys.show')
@@ -106,29 +103,22 @@ class SurveyController extends Controller
     
     public function export(Request $request)
     {
-        // dd($request);
-        // $headers = [
-        //     'Content-type'        => 'text/csv',
-        //     'Content-Disposition' => 'attachment; filename=export.csv',
-        //     'Pragma'              => 'no-chache',
-        //     'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-        //     'Expires'             => '0'
-        // ];
+        $survey = Survey::find($request->query('survey'));
+        $questions = $survey->questions->map(function ($item) { return $item->body; });
+        $answers_by_user = Answer::answers_by_user($survey);
+        // dd($answers);
         
-        // $callback = function () {
-        //     $handle = fopen('php://output', 'w');
-        //     fputscsv($handle, ['Test']);
-            
-        //     fclose($handle);
-        // };
-        
-        return response()->streamDownload(function () {
+        $callback = function () use ($questions, $answers_by_user) {
             $handle = fopen('php://output', 'w');
-            $list = [[1, 'hoge'], [2, 'piyo'], [3, 'fuga']];
-            foreach ($list as $row) {
-                fputcsv($handle, $row);
+            fputcsv($handle, $questions->toArray());
+            
+            foreach ($answers_by_user as $key => $answers) {
+                $arr = $answers->map(function ($item) { return $item->body; });
+                // dd($arr);
+                fputcsv($handle, $arr->toArray());
             }
             fclose($handle);
-        }, 'sample.csv');
+        };
+        return response()->streamDownload($callback, 'sample.csv');
     }
 }
