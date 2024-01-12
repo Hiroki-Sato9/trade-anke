@@ -61,6 +61,7 @@
                     </tr>
                 @endforeach
             </table>
+            {{ $surveys->appends(request()->query())->links() }}
         </div>
     </div>
     

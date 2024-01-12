@@ -27,7 +27,7 @@ class SurveyController extends Controller
     public function index(Request $request)
     {
         $params = $request->query();
-        $surveys = Survey::search($params)->get();
+        $surveys = Survey::search($params)->paginate(3);
         
         return view('surveys.index')
             ->with(['surveys' => $surveys,
