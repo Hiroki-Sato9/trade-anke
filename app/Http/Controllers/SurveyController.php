@@ -27,11 +27,12 @@ class SurveyController extends Controller
     public function index(Request $request)
     {
         $params = $request->query();
-        $surveys = Survey::search($params)->paginate(3);
+        $surveys = Survey::search($params)->paginate(15);
         
         return view('surveys.index')
             ->with(['surveys' => $surveys,
-                    'genders' => $this->genders]);
+                    'genders' => $this->genders,
+                    'vals' => $request->query()]);
     }
     
     public function show(Survey $survey, Request $request)
