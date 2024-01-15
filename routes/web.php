@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('static_pages.about');
 });
 
 Route::get('/about', function () {
@@ -34,13 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/detail', [ProfileController::class, 'detail'])->name('profile.detail');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/deliver', [ProfileController::class, 'deliver']);
+    Route::post('/deliver', [SurveyController::class, 'deliver']);
+    Route::put('/take', [SurveyController::class, 'take']);
     
     
     // Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     // Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::post('/surveys', [SurveyController::class, 'store']);
+    Route::get('/export', [SurveyController::class, 'export']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
     Route::post('/answers', [AnswerController::class, 'store']);

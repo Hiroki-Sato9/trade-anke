@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+// use Symfony\Component\HttpFoundation\StreamedResponse;
 
 use App\Models\Survey;
 use App\Models\Question;
@@ -10,6 +12,8 @@ use App\Models\Answer;
 use App\Http\Requests\SurveyRequest;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+
 
 class SurveyController extends Controller
 {
@@ -23,24 +27,20 @@ class SurveyController extends Controller
     public function index(Request $request)
     {
         $params = $request->query();
-        $surveys = Survey::search($params)->get();
+        $surveys = Survey::search($params)->paginate(15);
         
         return view('surveys.index')
             ->with(['surveys' => $surveys,
-                    'genders' => $this->genders]);
+                    'genders' => $this->genders,
+                    'vals' => $request->query()]);
     }
     
     public function show(Survey $survey, Request $request)
     {
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
+        $answers_by_user = [];
         if ($request->user() && $request->user()->is($survey->user)){
-            $answered_users = $survey->answered_users();
-            $answers_by_user = [];
-            foreach ($answered_users as $user){
-                $answers_by_user[$user->id] = Answer::get_answers($user, $survey);
-            }
-        } else {
-            $answers_by_user = false;
+            $answers_by_user = Answer::answers_by_user($survey);
         }
         
         return view('surveys.show')
@@ -72,5 +72,54 @@ class SurveyController extends Controller
         $request->user()->profile->add_point(-1);
     
         return redirect('/surveys/' . $survey->id);
+    }
+    
+    public function deliver(Request $request)
+    {
+        // 何人に配布するか
+        $num = $request->input('num');
+        $survey = Survey::find($request->input('survey'));
+        
+        // ポイントが条件を満たしているか
+        if ($request->user()->profile->point > $num) {
+            $i = $survey->deliver_survey($num);
+            $request->user()->profile->add_point(-$i);
+            return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
+        } else {
+            return Redirect::route('profile.detail')->with('flash_message', "ポイントが足りません");
+        }
+    }
+    
+    // ユーザがアンケートを受け取る
+    public function take(Request $request)
+    {
+        $result = Survey::deliver_to_user($request->user());
+        
+        if ($result) {
+            return Redirect::route('profile.detail')->with('flash_message', "アンケートを付与しました");
+        } else {
+            return Redirect::route('profile.detail')->with('flash_message', "あなたが回答できるアンケートがありません");
+        }
+    }
+    
+    public function export(Request $request)
+    {
+        $survey = Survey::find($request->query('survey'));
+        $questions = $survey->questions->map(function ($item) { return $item->body; });
+        $answers_by_user = Answer::answers_by_user($survey);
+        // dd($answers);
+        
+        $callback = function () use ($questions, $answers_by_user) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $questions->toArray());
+            
+            foreach ($answers_by_user as $key => $answers) {
+                $arr = $answers->map(function ($item) { return $item->body; });
+                // dd($arr);
+                fputcsv($handle, $arr->toArray());
+            }
+            fclose($handle);
+        };
+        return response()->streamDownload($callback, 'sample.csv');
     }
 }

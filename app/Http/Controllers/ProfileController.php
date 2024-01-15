@@ -39,21 +39,22 @@ class ProfileController extends Controller
         ]);
     }
     
-    public function deliver(Request $request)
-    {
-        // 何人に配布するか
-        $num = $request->input('num');
-        $survey = Survey::find($request->input('survey'));
+    // 
+    // public function deliver(Request $request)
+    // {
+    //     // 何人に配布するか
+    //     $num = $request->input('num');
+    //     $survey = Survey::find($request->input('survey'));
         
-        // ポイントが条件を満たしているか
-        if ($request->user()->profile->point > $num) {
-            $i = $survey->deliver_survey($num);
+    //     // ポイントが条件を満たしているか
+    //     if ($request->user()->profile->point > $num) {
+    //         $i = $survey->deliver_survey($num);
             
-            return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
-        } else {
-            return Redirect::route('profile.detail')->with('flash_message', "ポイントが足りません");
-        }
-    }
+    //         return Redirect::route('profile.detail')->with('flash_message', "{$i}人にアンケートを配布しました");
+    //     } else {
+    //         return Redirect::route('profile.detail')->with('flash_message', "ポイントが足りません");
+    //     }
+    // }
 
     /**
      * Update the user's profile information.

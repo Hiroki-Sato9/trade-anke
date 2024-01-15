@@ -18,6 +18,8 @@
         <div class="min-h-screen bg-gray-100">
             @if (Auth::check())
                 @include('layouts.navigation')
+            @else
+                @include('layouts.guest_nav')
             @endif
 
             <!-- Page Heading -->

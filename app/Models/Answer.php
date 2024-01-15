@@ -49,4 +49,13 @@ class Answer extends Model
                 && $answer->user->is($user) && $answer->survey->is($survey);
         });
     }
+    
+    public static function answers_by_user($survey)
+    {
+        $result = [];
+        foreach ($survey->answered_users() as $user){
+            $result[$user->id] = self::get_answers($user, $survey);
+        }
+        return $result;
+    }
 }

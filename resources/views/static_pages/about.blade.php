@@ -14,19 +14,25 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
+        @if(Auth::check())
+            @include('layouts.navigation')
+        @else
+            @include('layouts.guest_nav')
+        @endif
+            
         <div class="py-36 bg-gray-100">
         <div class="max-w-7xl mx-auto flex flex-col flex-wrap content-center">
-            <h1 class="text-5xl mb-3">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
-            <p class="text-lg mb-12">このサービスでは、自分が作成したアンケートを配布することができます。</p>
+            <h1 class="text-5xl mb-3 text-center">Trade-Ankeで、気軽にアンケート調査を実施しよう</h1>
+            <p class="text-lg mb-20 text-center">このサービスでは、自分が作成したアンケートを配布することができます。</p>
             
             <div class="flex justify-around">
-                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
+                <div class="flex items-center justify-center flex-col basis-2/5 bg-white shadow-sm p-2">
                     <span>ユーザー登録をしてアンケート調査をはじめましょう</span>
                     <button onclick="location.href='{{ route('register') }}'" class="w-2/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">ユーザー登録</button>
                 </div>
-                <div class="flex items-center justify-center flex-col bg-white shadow-sm p-6">
+                <div class="flex items-center justify-center flex-col basis-2/5 bg-white shadow-sm p-2">
                     <span>作成されたアンケートを見る</span>
-                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-4/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
+                    <button onclick="location.href='{{ route('surveys.index') }}'" class="w-2/5 bg-blue-500 hover:bg-blue-400 text-white rounded px-4 py-2 mb-20">アンケート一覧へ</button>
                 </div>
             </div>
             <div class="items-center pb-6">
@@ -34,35 +40,47 @@
                 <a href=" {{ route('login') }}" class="text-blue-900">ログイン</a>
             </div>
             
-            <h2 class="text-4xl border-t py-4 mb-4">Trade-Ankeで できること</h2>
+            <h2 class="text-4xl border-t py-4 mb-4">どんなサービス？</h2>
             <ul class="list-none">
                 <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
-                        <h3 class="text-3xl mb-3">アンケートを簡単に作成できる！</h3>
+                        <h3 class="text-3xl mb-3">アンケートを簡単に作成・配布できるサービスです</h3>
                         <p class="text-lg">
                             サイト内のフォームにて簡単に質問フォームを作成できます。
                         </p>
                     </div>
                 </li>
-                <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
-                    <div class="content">
-                        <h3 class="text-3xl mb-3">アンケートを答えるたびにポイントをゲット！</h3>
-                        <p class="text-lg">
-                            ゲットしたポイントは、アンケートの配布やインタビュー調査をするときに必要になります。<br>
-                            
+                <li class="flex justify-between bg-white shadow-sm p-6 mb-6 h-80 pt-10">
+                    <img class="basis-2/5" src="{{ asset('img/static_pages/img1.jpg') }}" alt="">
+                    <div class="content basis-1/2">
+                        <h3 class="text-3xl mb-3">アンケート調査を行うときのハードル</h3>
+                        <p class="text-xl">
+                            アンケート調査を行うときの最大のハードルとは、「自分が調査のターゲットにしたい人を一定数集めること」です。<br>
+                            学生のように周りに同年代の人たちしかいなかったり、時間やお金をかけられない場合、<br>アンケート調査を行うことはとても
+                            ハードルが高いものとなります。
                         </p>
                     </div>
                 </li>
                 <li class="bg-white shadow-sm p-6 mb-6 h-80 pt-10">
                     <div class="content">
-                        <h3 class="text-3xl mb-3">性別・年代を指定してアンケートを配布！</h3>
-                        <p class="text-lg">アンケートを届けたい人たちに、実際にアンケートを届けることができます。</p>
+                        <h3 class="text-3xl mb-3">アンケートを作りたい人同士が答え合う仕組み</h3>
+                        <p class="text-xl">
+                            この課題を解決するためにこのサービスは作られました。<br>
+                            このサービスでは、自分が作ったアンケートを配るときに「ポイント」を必要とします。<br>
+                            このポイントは、配られた誰かのアンケートに答えたり、インタビューを受けたときにのみ獲得することができます。<br>
+                            こうすることで、アンケート調査をしたい人たちがお互いにアンケートを答える仕組みができあがりました。
+                            
+                        </p>
                     </div>
                 </li>
                 <li class="bg-white shadow-sm p-6 mb-6  h-80 pt-10">
                     <div class="content">
                         <h3 class="text-3xl mb-3">気になった回答者にインタビューができる！</h3>
-                        <p class="text-lg">届いたアンケート回答のうち、気になった回答者にインタビューを申し込むことができます。</p>
+                        <p class="text-lg">
+                            インタビュー調査もまたハードルが高い調査法のひとつです。<br>
+                            しかしこのTrade-Ankeでは、自分が出したアンケートの結果を見て、面白いと思った人にインタビューの申し込みができます。<br>
+                            顔を合わせず、インタビューができることも、このwebサービスの特徴です。
+                        </p>
                     </div>
                 </li>
             </ul>

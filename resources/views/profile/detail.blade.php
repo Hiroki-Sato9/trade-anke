@@ -8,10 +8,17 @@
     
     <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
-        <div>あなたのポイント：
-            <span class="text-xl">{{ $user->profile->point }}</span>
+        <div class="flex flex-row">
+            <div class="mr-10">あなたのポイント：
+                <span class="text-xl">{{ $user->profile->point }}</span>
+            </div>
+            <form method="post" action="/take">
+                @method('put')
+                @csrf
+                <button type="submit" action="#" class="button bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">アンケートを1つ貰う</button>
+            </form>
         </div>
-        <h2 class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">あなたが作成したアンケート</h2>
+        <h2 id="created_surveys" class="text-2xl pb-2.5 border-b-2 border-solid border-gray-600">あなたが作成したアンケート</h2>
             <table>
                 <tr>
                     <th>アンケート</th>

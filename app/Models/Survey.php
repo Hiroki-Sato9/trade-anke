@@ -88,22 +88,22 @@ class Survey extends Model
     
     // アンケートの配布
     public function deliver_survey($num) {
-        $i = 0;
+        $delivered_num = 0;
         $users = [];
         foreach (User::all() as $user)
         {
-            if ($i >= $num){
+            if ($delivered_num >= $num){
                 break;
             }
             if ($this->is_allowed_to_deliver($user) && 
                 !$this->delivered_users->contains($user)){
                 array_push($users, $user->id);
-                $i += 1;
+                $delivered_num += 1;
             }
         }
         $this->delivered_users()->attach($users);
         
-        return $i;
+        return $delivered_num;
     }
     
     // テストユーザにアンケートを配布
@@ -122,6 +122,19 @@ class Survey extends Model
             }
         }
         return $i;
+    }
+    
+    // あるユーザにアンケートを配る
+    public static function deliver_to_user($user){
+        foreach (static::all() as $survey){
+            if ($survey->is_allowed_to_deliver($user) &&
+                !$survey->delivered_users->contains($user)){
+                   $survey->delivered_users()->attach($user->id);
+                   return true;
+            }
+        }
+        return false;
+        
     }
     
     // あるユーザーが作成したアンケート
@@ -149,8 +162,8 @@ class Survey extends Model
     {
         if (isset($params['gender_id'])) $query->where('gender_id', $params['gender_id']);
         
-        if (isset($params['min_age'])) $query->where('min_age', '<=', $params['min_age']);
-        if (isset($params['max_age'])) $query->where('max_age', '>=', $params['max_age']);
+        if (isset($params['min_age'])) $query->where('min_age', '>=', $params['min_age']);
+        if (isset($params['max_age'])) $query->where('max_age', '<=', $params['max_age']);
         
         if (isset($params['keyword'])){
             $query->where(function ($query) use ($params) {
