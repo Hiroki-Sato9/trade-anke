@@ -24,17 +24,17 @@
         
             <div>
                 <label for="min_age">min</label>
-                <input id="min_age" class="block mt-1 w-full" type="number" name="min_age" value="{{ $vals['min_age'] ?: "" }}" />
+                <input id="min_age" class="block mt-1 w-full" type="number" name="min_age" value="{{ isset($vals['min_age']) ? $vals['min_age'] : "" }}" />
             </div>
             
             <div>
                 <label for="max_age">max</label>
-                <input id="max_age" class="block mt-1 w-full" type="number" name="max_age" value="{{ $vals['max_age'] ?: "" }}" />
+                <input id="max_age" class="block mt-1 w-full" type="number" name="max_age" value="{{ isset($vals['max_age']) ? $vals['max_age'] : "" }}" />
             </div>
             
             <div>
                 <label for="keyword">キーワード</label>
-                <input id="keyword" class="block mt-1 w-full" type="text" name="keyword" value="{{ $vals['keyword'] ?: "" }}" />
+                <input id="keyword" class="block mt-1 w-full" type="text" name="keyword" value="{{ isset($vals['keyword']) ? $vals['keyword'] : "" }}" />
             </div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">検索
             </button>
