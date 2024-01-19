@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\InterviewRequestController;
+use App\Http\Controllers\GoogleFormsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,3 +67,5 @@ Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index'
 Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
 
 require __DIR__.'/auth.php';
+
+Route::get('/forms/test', [GoogleFormsController::class, 'test']);
