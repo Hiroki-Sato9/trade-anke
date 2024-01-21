@@ -12,11 +12,8 @@ class GoogleFormsController extends Controller
     //
     public function test(Request $request)
     {
-        // dd(config_path());
         $client = new Google_Client();
-        // $client->setAuthConfig('/config/google_client_secret.json');
         $client->setAuthConfig(config_path() . '/google_client_secret.json');
-        // dd($request->url());
         $client->setRedirectUri($request->fullUrl());
         $client->addScope(Google_Service_Forms::FORMS_BODY);
         $client->setAccessType('offline');
@@ -28,8 +25,8 @@ class GoogleFormsController extends Controller
         $auth_url = $client->createAuthUrl();
         
         if ($request->get('code')) {
-            $code = $request->get('code');
-            // $client->
+            $token = $client->fetchAccessTokenWithAuthCode($request->get('code'));
+            $client->setAccessToken($token);
         }
         
         return view('static_pages.test')
