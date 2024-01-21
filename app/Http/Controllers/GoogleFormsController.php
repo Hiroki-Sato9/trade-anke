@@ -16,7 +16,7 @@ class GoogleFormsController extends Controller
         $client = new Google_Client();
         // $client->setAuthConfig('/config/google_client_secret.json');
         $client->setAuthConfig(config_path() . '/google_client_secret.json');
-        dd($request->fullUrl());
+        // dd($request->url());
         $client->setRedirectUri($request->fullUrl());
         $client->addScope(Google_Service_Forms::FORMS_BODY);
         $client->setAccessType('offline');
