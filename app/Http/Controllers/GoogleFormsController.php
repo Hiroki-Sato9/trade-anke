@@ -10,6 +10,29 @@ use Google_Service_Forms;
 class GoogleFormsController extends Controller
 {
     //
+    public function connect(Request $request)
+    {
+        // codeパラメータが与えられているなら
+        if (false) {
+            // クライアントライブラリの初期化
+            $client = new Google_Client();
+            $client->setAuthConfig(config_path() . '/google_client_secret.json');
+            $client->addScope(Google_Service_Forms::FORMS_BODY);
+            $client->setAccessType('offline');
+            // リダイレクトURIの設定
+            $client->setRedirectUri($request->url());
+            
+            // 認証URLの生成
+            $auth_url = $client->createAuthUrl();
+            
+            // 認証へリダイレクトさせる
+            
+        } else {
+            // 認証コードの取得
+            // APIアクセストークンの取得
+        }
+    }
+    
     public function test(Request $request)
     {
         $client = new Google_Client();
