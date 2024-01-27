@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Google_client;
 use Google_Service_Forms;
 
+use App\Services\FormsAPIService;
+
 class GoogleFormsController extends Controller
 {
     //
@@ -37,24 +39,15 @@ class GoogleFormsController extends Controller
     
     public function test(Request $request)
     {
-        $client = new Google_Client();
-        $client->setAuthConfig(config_path() . '/google_client_secret.json');
-        $client->setRedirectUri($request->fullUrl());
-        $client->addScope(Google_Service_Forms::FORMS_BODY);
-        $client->setAccessType('offline');
+        dd(session('google_access_token'));
+        $form_service = new FormsAPIService('https://docs.google.com/forms/d/e/1FAIpQLSeSDM5wYGvsn7zAmH49F9ghUSVisqE19aBUdibbwyvpDXHAyQ/viewform?usp=sf_link',$request->url());
         
-        // 偽造防止のためにトークンを指定
-        // $state = substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, 40);
-        
-        // GoogleのOAuth2.0サーバーへリクエストを行うためのURLを作成する
-        $auth_url = $client->createAuthUrl();
-        
+        // dd($form_service);
         if ($request->get('code')) {
-            $token = $client->fetchAccessTokenWithAuthCode($request->get('code'));
-            $client->setAccessToken($token);
+            $form_service->set_token($request->get('code'));
         }
         
         return view('static_pages.test')
-            ->with(['auth_url' => $auth_url]);
+            ->with(['auth_url' => $form_service->auth_url]);
     }
 }

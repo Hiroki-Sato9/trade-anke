@@ -6,7 +6,7 @@ use Google_Service_Forms;
 
 class FormsAPIService
 {
-    public function __construct($redirect_uri, $form_url)
+    public function __construct($form_url, $redirect_uri)
     {
         // APIクライアントの初期化
         $this->client = new Google_Client();
@@ -18,15 +18,37 @@ class FormsAPIService
         $this->id = $this->get_form_id($form_url);
         // リダイレクトURIの設定
         $this->client->setRedirectUri($redirect_uri);
-        // 認証URLの生成
-        $this->auth_url = $this->client->createAuthUrl();
+        
+        if ($this->is_authenticated()) {
+            $this->set_token();
+        } else {
+            // 認証URLの生成
+            $this->auth_url = $this->client->createAuthUrl();
+        }
+        
+    }
+    
+    public function is_authenticated() {
+        if (!empty(session('google_access_token'))) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     // アクセストークンをセッションに保存する
-    public function store_token($code)
+    public function set_token($code=null)
     {
+        if ($this->is_authenticated()) {
+            $this->token = session('google_access_token');
+            $this->client->setAccessToken($code);
+            return true;
+        }
+        
         $this->token = $this->client->fetchAccessTokenWithAuthCode($code);
-        session('access_token', $this->token);
+        $this->client->setAccessToken($code);
+        session(['google_access_token' => $this->token]);
+        return true;
     }
     
     // 受け取ったフォームのURLからIDを取得する
@@ -38,4 +60,11 @@ class FormsAPIService
         
         return $data[1];
     }
+    
+    public function get_survey_iframe()
+    {
+        
+    }
+    
+    
 }
