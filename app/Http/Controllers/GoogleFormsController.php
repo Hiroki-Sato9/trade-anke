@@ -39,13 +39,24 @@ class GoogleFormsController extends Controller
     
     public function test(Request $request)
     {
-        dd(session('google_access_token'));
+        // dd(session('google_access_token'));
         $form_service = new FormsAPIService('https://docs.google.com/forms/d/e/1FAIpQLSeSDM5wYGvsn7zAmH49F9ghUSVisqE19aBUdibbwyvpDXHAyQ/viewform?usp=sf_link',$request->url());
         
         // dd($form_service);
         if ($request->get('code')) {
             $form_service->set_token($request->get('code'));
+            // $form_data = $form_service->service->forms->get($form_service->id);
+            // dd($form_data);
+             header('Location: ' . filter_var($request->url(), FILTER_SANITIZE_URL));
         }
+        
+        if ($form_service->client->getAccessToken()) {
+            $access_token = $form_service->client->getAccessToken();
+            dd($access_token['access_token']);
+            // $data = $form_service->service->forms->get($form_service->id);
+            // dd($data);
+        }
+        
         
         return view('static_pages.test')
             ->with(['auth_url' => $form_service->auth_url]);
