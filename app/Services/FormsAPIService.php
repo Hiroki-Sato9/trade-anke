@@ -8,7 +8,7 @@ class FormsAPIService
 {
     public function __construct($form_url, $redirect_uri)
     {
-        if ($this->is_authenticated()) {
+        if (!empty(session('google_access_token'))) {
             session()->forget('google_access_token');
         }
         // APIクライアントの初期化
@@ -67,7 +67,7 @@ class FormsAPIService
         }
         
         $token = $this->client->fetchAccessTokenWithAuthCode($code, session('code_verifier'));
-        dd($token);
+        // dd($token);
         $this->client->setAccessToken($token);
         session(['google_access_token' => $token]);
         return true;

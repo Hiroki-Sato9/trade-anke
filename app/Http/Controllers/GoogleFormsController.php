@@ -51,10 +51,8 @@ class GoogleFormsController extends Controller
         }
         
         if ($form_service->client->getAccessToken()) {
-            $access_token = $form_service->client->getAccessToken();
-            dd($access_token['access_token']);
-            // $data = $form_service->service->forms->get($form_service->id);
-            // dd($data);
+            $data = $form_service->service->forms->get($form_service->id);
+            dd($data);
         }
         
         
