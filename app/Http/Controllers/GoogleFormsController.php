@@ -44,7 +44,7 @@ class GoogleFormsController extends Controller
         $client = new Google_Client();
         $client->setAuthConfig(config_path() . '/google_client_secret.json');
         $client->setRedirectUri($redirect_uri);
-        $client->addScope(Google_Service_Forms::FORMS_BODY);
+        $client->addScope([Google_Service_Forms::FORMS_BODY, Google_Service_Forms::FORMS_RESPONSES_READONLY]);
         $client->setAccessType('offline');
         $service = new Google_Service_Forms($client);
         
@@ -67,6 +67,7 @@ class GoogleFormsController extends Controller
         if ($client->getAccessToken()) {
             // dd($client->getAccessToken());
             $data = $service->forms->get('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
+            $data = $service->forms_responses->listFormsResponses('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
             dd($data);
         }
 
