@@ -39,35 +39,29 @@ class GoogleFormsController extends Controller
     
     public function test(Request $request)
     {
-        $redirect_uri = $request->url();
         
-        $client = new Google_Client();
-        $client->setAuthConfig(config_path() . '/google_client_secret.json');
-        $client->setRedirectUri($redirect_uri);
-        $client->addScope([Google_Service_Forms::FORMS_BODY, Google_Service_Forms::FORMS_RESPONSES_READONLY]);
-        $client->setAccessType('offline');
-        $service = new Google_Service_Forms($client);
+        $form_service = new FormsAPIService('https://docs.google.com/forms/d/1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk/edit', $request->url());
         
         if (!empty($request->get('code'))) {
-            $token = $client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
-            $client->setAccessToken($token);
-            header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+            $token = $form_service->client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
+            $form_service->client->setAccessToken($token);
+            header('Location: ' . filter_var($form_service->redirect_uri, FILTER_SANITIZE_URL));
         }
         
         if (!empty(session('upload_token'))) {
-            $client->setAccessToken(session('upload_token'));
-            if ($client->isAccessTokenExpired()) {
+            $form_service->client->setAccessToken(session('upload_token'));
+            if ($form_service->client->isAccessTokenExpired()) {
                 session()->forget('upload_token');
             }
         } else {
-            session()->put('code_verifier', $client->getOAuth2Service()->generateCodeVerifier());
-            $auth_url = $client->createAuthUrl();
+            session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
+            $auth_url = $form_service->client->createAuthUrl();
         }
         
-        if ($client->getAccessToken()) {
+        if ($form_service->client->getAccessToken()) {
             // dd($client->getAccessToken());
-            $data = $service->forms->get('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
-            $data = $service->forms_responses->listFormsResponses('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
+            // $data = $form_service->get_answers_by_user();
+            $data = $form_service->get_questions();
             dd($data);
         }
 
