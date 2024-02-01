@@ -62,8 +62,13 @@ class FormsAPIService
         foreach ($responses as $response) {
             if ($response->respondentEmail) {
                 $arr = [];
+                // $response->getAnswers(): Answer[]
+                // getTextAnswers()->getAnswers: TextAnswer[]
                 foreach ($response->getAnswers() as $answer) {
-                    $arr[$answer->questionId] = $answer;
+                    $arr[$answer->questionId] = array_map(function ($n){
+                        return $n->value;
+                    }, $answer->getTextAnswers()->getAnswers());
+                    // $answer->getTextAnswers();
                 }
                 $answers[] = ["email" => $response->respondentEmail, "answers" => $arr];
             }
