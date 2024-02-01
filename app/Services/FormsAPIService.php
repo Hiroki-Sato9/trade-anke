@@ -54,10 +54,20 @@ class FormsAPIService
     // ユーザーごとの回答を取得する
     public function get_answers_by_user()
     {
-        // Answer[]
         $responses = $this->service->forms_responses->listFormsResponses($this->form_id)
             ->getResponses();
             
+        //Answer[]
+        $answers = [];
+        foreach ($responses as $response) {
+            if ($response->respondentEmail) {
+                $arr = [];
+                foreach ($response->getAnswers() as $answer) {
+                    $arr[$answer->questionId] = $answer;
+                }
+                $answers[] = ["email" => $response->respondentEmail, "answers" => $arr];
+            }
+        }
             // ->getAnswers();
         
         return $answers;

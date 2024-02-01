@@ -60,8 +60,8 @@ class GoogleFormsController extends Controller
         
         if ($form_service->client->getAccessToken()) {
             // dd($client->getAccessToken());
-            // $data = $form_service->get_answers_by_user();
-            $data = $form_service->get_questions();
+            $data = $form_service->get_answers_by_user();
+            // $data = $form_service->get_questions();
             dd($data);
         }
 
