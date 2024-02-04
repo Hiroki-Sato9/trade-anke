@@ -1,4 +1,3 @@
-
 // 質問項目を増やすイベントの生成
 class AddQuestion {
     constructor() {
@@ -32,7 +31,6 @@ class AddQuestion {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const ev = new AddQuestion();
-});
 
+
+const ev = new AddQuestion();

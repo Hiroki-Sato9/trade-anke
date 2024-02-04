@@ -14,27 +14,7 @@ class GoogleFormsController extends Controller
     //
     public function connect(Request $request)
     {
-        // codeパラメータが与えられているなら
-        if (empty($request->get('code'))) {
-            // クライアントライブラリの初期化
-            $client = new Google_Client();
-            $client->setAuthConfig(config_path() . '/google_client_secret.json');
-            $client->addScope(Google_Service_Forms::FORMS_BODY);
-            $client->setAccessType('offline');
-            // リダイレクトURIの設定
-            $client->setRedirectUri($request->url());
-            
-            // 認証URLの生成
-            $auth_url = $client->createAuthUrl();
-            // 認証へリダイレクトさせる
-            return redirect($auth_url);
-            
-        } else {
-            // 認証コードの取得
-            // APIアクセストークンの取得
-            $token = $client->fetchAccessTokenWithAuthCode($request->get('code'));
-            $request->session()->put('google.access', $token);
-        }
+        
     }
     
     public function test(Request $request)

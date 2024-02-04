@@ -27,23 +27,26 @@
             <x-input-error :messages="$errors->get('survey.description')" class="mt-2" />
         </div>
         
-        <div class="questions">
-            @if(empty(old('question')))
-            <div class="question">
-                    <x-input-label for="question0" :value="__('Question')" />
-                    <x-text-input id="question0" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.0.body')" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('question.0.body')" class="mt-2" />
-            </div>
-            @else
-                @foreach(old('question', []) as $key => $value)
-                    <div class="question">
-                        <x-input-label for="question{{ $key }}" :value="__('Question')" />
-                        <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" required autofocus autocomplete="name" />
-                        <x-input-error :messages="$errors->get('question.' . $key . '.body')" class="mt-2" />
-                    </div>
-                @endforeach
-                
-            @endif
+        <div class="">
+            <div class="google-forms"></div>
+            <div class="questions">
+                @if(empty(old('question')))
+                <div class="question">
+                        <x-input-label for="question0" :value="__('Question')" />
+                        <x-text-input id="question0" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.0.body')" required autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('question.0.body')" class="mt-2" />
+                </div>
+                @else
+                    @foreach(old('question', []) as $key => $value)
+                        <div class="question">
+                            <x-input-label for="question{{ $key }}" :value="__('Question')" />
+                            <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" required autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('question.' . $key . '.body')" class="mt-2" />
+                        </div>
+                    @endforeach
+                    
+                @endif
+        </div>
         </div>
         
         <div class="m-3">
@@ -80,3 +83,5 @@
     </form>
     </div>
 </x-app-layout>
+
+<script src="{{ asset('/js/surveys/create.js') }}"></script>

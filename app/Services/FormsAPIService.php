@@ -38,6 +38,12 @@ class FormsAPIService
         return isset($data[2]) ? $data[2] : $url;
     }
     
+    // APiが使用可能か。アクセストークンをセッションに持っているか
+    public function is_api_usable()
+    {
+        return !is_null(session()->get('upload_token'));
+    }
+    
     // アンケートの質問一覧の取得
     public function get_questions()
     {
