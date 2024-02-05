@@ -31,6 +31,16 @@ class AddQuestion {
     }
 }
 
+const radio_buttons = document.querySelectorAll("input[type='radio'][name='question_type']");
+const google_form = document.querySelector('.google-forms');
+const default_form = document.querySelector('.default_form');
+// ラジオボタンの選択によって、フォームにhiddenクラスをトグルする
+for (const target of radio_buttons) {
+    target.addEventListener('change', () => {
+        google_form.classList.toggle('hidden');
+        default_form.classList.toggle('hidden');
+    });
+}
 
 
 const ev = new AddQuestion();
