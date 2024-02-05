@@ -32,19 +32,19 @@
         <div class="mb-4">
             <div>
                 <div>
-                    <input type="radio" id="make_type" name="question_type" checked>
-                    <label for="make_type">アンケートを一から作る</label>
+                    <input type="radio" id="default_type" name="question_type" value="default_type" checked>
+                    <label for="default_type">アンケートを一から作る</label>
                 </div>
                 <div>
-                    <input type="radio" id="use_type" name="question_type">
-                    <label for="use_type">Google Formsを利用する</label>
+                    <input type="radio" id="forms_type" name="question_type" value="forms_type">
+                    <label for="forms_type">Google Formsを利用する</label>
                 </div>
             </div>
             <div class="">
                 <div class="google-forms hidden">
                     <div>
                         <x-input-label for="form_url" :value="__('Google FormのURL')" />
-                        <x-text-input id="form_url" class="block mt-1 w-full" type="text" name="survey[form_url]" :value="old('survey.form_url')" required autofocus autocomplete="name" />
+                        <x-text-input id="form_url" class="block mt-1 w-full" type="text" name="survey[form_url]" :value="old('survey.form_url')" autofocus autocomplete="name" />
                         <x-input-error :messages="$errors->get('survey.form_url')" class="mt-2" />
                     </div>
                 </div>
@@ -53,18 +53,17 @@
                         @if(empty(old('question')))
                         <div class="question">
                                 <x-input-label for="question0" :value="__('Question')" />
-                                <x-text-input id="question0" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.0.body')" required autofocus autocomplete="name" />
+                                <x-text-input id="question0" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.0.body')" autofocus autocomplete="name" />
                                 <x-input-error :messages="$errors->get('question.0.body')" class="mt-2" />
                         </div>
                         @else
                             @foreach(old('question', []) as $key => $value)
                                 <div class="question">
                                     <x-input-label for="question{{ $key }}" :value="__('Question')" />
-                                    <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" required autofocus autocomplete="name" />
+                                    <x-text-input id="question{{ $key }}" class="block mt-1 w-full" type="text" name="question[][body]" :value="old('question.' . $key . '.body')" autofocus autocomplete="name" />
                                     <x-input-error :messages="$errors->get('question.' . $key . '.body')" class="mt-2" />
                                 </div>
                             @endforeach
-                            
                         @endif
                     </div>
                     <div class="m-3">

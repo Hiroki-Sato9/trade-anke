@@ -63,11 +63,15 @@ class SurveyController extends Controller
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
         
-        $question_models = [];
-        foreach ($question_input as $question){
-            array_push($question_models, new Question($question));
+        if ($survey->is_form_survey()) {
+            
+        } else {
+            $question_models = [];
+            foreach ($question_input as $question){
+                array_push($question_models, new Question($question));
+            }
+            $survey->questions()->saveMany($question_models);
         }
-        $survey->questions()->saveMany($question_models);
         
         $request->user()->profile->add_point(-1);
     
