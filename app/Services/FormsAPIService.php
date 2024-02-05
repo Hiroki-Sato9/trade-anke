@@ -11,11 +11,11 @@ class FormsAPIService
     public $redirect_uri;
     private $form_id;
     
-    public function __construct($form_url, $redirect_uri)
+    public function __construct($form_id, $redirect_uri)
     {
         $this->init($redirect_uri);
         $this->redirect_uri = $redirect_uri;
-        $this->form_id = $this->get_form_id($form_url);
+        $this->form_id = $form_id;
     }
     
     private function init($redirect_uri)
@@ -29,7 +29,7 @@ class FormsAPIService
     }
     
     // 受け取ったフォームのURLからIDを取得する
-    private function get_form_id($url)
+    public static function get_form_id($url)
     {
         $pre = '|https://docs.google.com/forms/d(/e)*/';
         $suf = '/.+|';

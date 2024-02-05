@@ -13,7 +13,7 @@ use App\Http\Requests\SurveyRequest;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-
+use App\Services\FormsAPIService;
 
 class SurveyController extends Controller
 {
@@ -62,9 +62,11 @@ class SurveyController extends Controller
         
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
-        
-        if ($survey->is_form_survey()) {
-            
+
+        if ($survey_input['form_url']) {
+            $url = $survey_input['form_url'];
+            $survey->form_id = FormsAPIService::get_form_id($url);
+            $survey->save();
         } else {
             $question_models = [];
             foreach ($question_input as $question){

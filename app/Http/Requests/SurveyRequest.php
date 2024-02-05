@@ -23,7 +23,7 @@ class SurveyRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this);
+        // dd($this);
         return [
             'survey.title' => 'required',
             'survey.description' => 'required',
