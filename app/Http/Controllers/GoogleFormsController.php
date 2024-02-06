@@ -28,7 +28,7 @@ class GoogleFormsController extends Controller
             header('Location: ' . filter_var($form_service->redirect_uri, FILTER_SANITIZE_URL));
         }
         
-        if (!empty(session('upload_token'))) {
+        if ($form_service->is_api_usable()) {
             $form_service->client->setAccessToken(session('upload_token'));
             if ($form_service->client->isAccessTokenExpired()) {
                 session()->forget('upload_token');

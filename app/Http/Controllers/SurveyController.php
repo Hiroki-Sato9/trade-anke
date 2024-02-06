@@ -63,6 +63,7 @@ class SurveyController extends Controller
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
 
+        // Google Formsを利用する場合とそれ以外の処理
         if ($survey_input['form_url']) {
             $url = $survey_input['form_url'];
             $survey->form_id = FormsAPIService::get_form_id($url);

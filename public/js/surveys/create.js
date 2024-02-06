@@ -31,6 +31,7 @@ class AddQuestion {
     }
 }
 
+
 const radio_buttons = document.querySelectorAll("input[type='radio'][name='question_type']");
 const google_form = document.querySelector('.google-forms');
 const default_form = document.querySelector('.default_form');

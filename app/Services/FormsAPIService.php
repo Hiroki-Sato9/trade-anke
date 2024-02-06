@@ -41,7 +41,7 @@ class FormsAPIService
     // APiが使用可能か。アクセストークンをセッションに持っているか
     public function is_api_usable()
     {
-        return !is_null(session()->get('upload_token'));
+        return !empty(session()->get('upload_token'));
     }
     
     // アンケートの質問一覧の取得
