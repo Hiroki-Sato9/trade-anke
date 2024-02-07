@@ -39,9 +39,21 @@ class FormsAPIService
     }
     
     // APiが使用可能か。アクセストークンをセッションに持っているか
-    public function is_api_usable()
+    // クライアントに
+    public function can_set_token()
     {
         return !empty(session()->get('upload_token'));
+    }
+    
+    // セッションから、アクセストークンを取得しクライアントに渡す
+    public function set_access_token()
+    {
+        if ($this->can_set_token() && !$this->client->getAccessToken()) {
+            $this->client->setAccessToken(session('upload_token'));
+            if ($this->client->isAccessTokenExpired()) {
+                session()->forget('upload_token');
+            }
+        }
     }
     
     // アンケートの質問一覧の取得
