@@ -11,10 +11,10 @@ class FormsAPIService
     public $redirect_uri;
     private $form_id;
     
-    public function __construct($form_id, $redirect_uri="")
+    public function __construct($form_id='', $redirect_uri='')
     {
-        $this->init($redirect_uri);
-        $this->redirect_uri = $redirect_uri == "" ? $redirect_uri : route('forms.connect');
+        $this->redirect_uri = $redirect_uri == '' ? route('forms.connect') : $redirect_uri;
+        $this->init($this->redirect_uri);
         $this->form_id = $form_id;
     }
     
@@ -22,7 +22,7 @@ class FormsAPIService
     {
         $this->client = new Google_client();
         $this->client->setAuthConfig(config_path() . '/google_client_secret.json');
-        $this->client->setRedirectUri($redirect_uri);
+        $this->client->setRedirectUri($this->redirect_uri);
         $this->client->addScope([Google_Service_Forms::FORMS_BODY, Google_Service_Forms::FORMS_RESPONSES_READONLY]);
         $this->client->setAccessType('offline');
         $this->service = new Google_Service_Forms($this->client);
