@@ -69,3 +69,4 @@ Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('survey
 require __DIR__.'/auth.php';
 
 Route::get('/forms/test', [GoogleFormsController::class, 'test']);
+Route::get('/forms/connect', [GoogleFormsController::class, 'test'])->name('forms.connect');

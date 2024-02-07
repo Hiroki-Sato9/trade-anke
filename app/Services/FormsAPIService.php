@@ -11,10 +11,10 @@ class FormsAPIService
     public $redirect_uri;
     private $form_id;
     
-    public function __construct($form_id, $redirect_uri)
+    public function __construct($form_id, $redirect_uri="")
     {
         $this->init($redirect_uri);
-        $this->redirect_uri = $redirect_uri;
+        $this->redirect_uri = $redirect_uri == "" ? $redirect_uri : route('forms.connect');
         $this->form_id = $form_id;
     }
     

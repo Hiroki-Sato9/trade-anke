@@ -37,11 +37,28 @@ class SurveyController extends Controller
     
     public function show(Survey $survey, Request $request)
     {
+        if ($survey->is_form_survey()) {
+            $form_service = new FormsAPIService('https://docs.google.com/forms/d/1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk/edit');
+            // アクセストークンを保持しているか
+            if ($form_service->can_set_token()) {
+                // アクセストークンをセットして、アンケート結果の取得処理
+                $form_service->set_access_token();
+                $data = $form_service->get_questions();
+                dd($data);
+            } else {
+                // connectアクションへリダイレクト
+                return redirect()->route('forms.connect');
+            }
+        } else {
+            
+        }
+        
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
         $answers_by_user = [];
         if ($request->user() && $request->user()->is($survey->user)){
             $answers_by_user = Answer::answers_by_user($survey);
         }
+        
         
         return view('surveys.show')
             ->with(['survey' => $survey,

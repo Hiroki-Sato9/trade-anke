@@ -16,21 +16,23 @@ class GoogleFormsController extends Controller
     public function connect(Request $request)
     {
         
-        // $form_service = new FormsAPIService('https://docs.google.com/forms/d/1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk/edit', $request->url());
+        $form_service = new FormsAPIService('');
         if (!empty($request->get('code'))) {
             $token = $form_service->client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
             session(['upload_token' => $token]);
             header('Location: ' . filter_var($form_service->redirect_uri, FILTER_SANITIZE_URL));
-        }
+        } 
         
         if ($form_service->can_set_token()) {
             // 元のアクションへリダイレクト
-            redirect();
+            redirect(session('redirect_url'));
         } else {
+            session()->put('redirect_url', url()->previous());
+            
             session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
             $auth_url = $form_service->client->createAuthUrl();
-            // $auth_urlへリダイレクト
-            redirect();
+
+            return redirect($auth_url);
         }
     }
     
