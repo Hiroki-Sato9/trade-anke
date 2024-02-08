@@ -26,8 +26,10 @@ class GoogleFormsController extends Controller
         } 
         
         if ($form_service->can_set_token()) {
+            $url = session('redirect_url');
+            session()->forget('redirect_url');
             // 元のアクションへリダイレクト
-            return redirect(session('redirect_url'));
+            return redirect($url);
         } else {
             session()->put('redirect_url', url()->previous());
             // dd($form_service->client);
@@ -42,7 +44,25 @@ class GoogleFormsController extends Controller
     
     public function update(Survey $survey, Request $request)
     {
-        dd($survey);
+        $form_service = new FormsAPIService($survey->form_id);
+        // アクセストークンを保持しているか
+        if (!$form_service->can_set_token()) {
+            // connectアクションへリダイレクト
+            return redirect()->route('forms.connect');
+        }
+        // アクセストークンをセットして、アンケート結果の取得処理
+        // $form_service->set_access_token();
+        $form_service->client->setAccessToken(session('upload_token'));
+        if ($form_service->client->isAccessTokenExpired()) {
+            session()->forget('upload_token');
+        }
+        $questions = $form_service->get_questions();
+        $question_models = [];
+        foreach ($questions as $key => $value) {
+            $question_models[] = new Question(['body' => $value]);
+        }
+        $survey->saveMany($question_models);
+        $answers_by_user = $form_service->get_answers_by_user();
     }
     
     public function test(Request $request)
