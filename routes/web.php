@@ -70,3 +70,4 @@ require __DIR__.'/auth.php';
 
 Route::get('/forms/test', [GoogleFormsController::class, 'test']);
 Route::get('/forms/connect', [GoogleFormsController::class, 'connect'])->name('forms.connect');
+Route::patch('/forms/{survey}', [GoogleFormsController::class, 'update'])->name('forms.update');

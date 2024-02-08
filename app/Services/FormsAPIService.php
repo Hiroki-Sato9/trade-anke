@@ -49,6 +49,7 @@ class FormsAPIService
     public function set_access_token()
     {
         if ($this->can_set_token() && !$this->client->getAccessToken()) {
+            dd(session('upload_token'));
             $this->client->setAccessToken(session('upload_token'));
             if ($this->client->isAccessTokenExpired()) {
                 session()->forget('upload_token');

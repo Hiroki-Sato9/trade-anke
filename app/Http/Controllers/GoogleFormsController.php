@@ -8,6 +8,7 @@ use Google_client;
 use Google_Service_Forms;
 
 use App\Services\FormsAPIService;
+use App\Models\Survey;
 
 class GoogleFormsController extends Controller
 {
@@ -26,7 +27,7 @@ class GoogleFormsController extends Controller
         
         if ($form_service->can_set_token()) {
             // 元のアクションへリダイレクト
-            redirect(session('redirect_url'));
+            return redirect(session('redirect_url'));
         } else {
             session()->put('redirect_url', url()->previous());
             // dd($form_service->client);
@@ -39,9 +40,14 @@ class GoogleFormsController extends Controller
         //     ->with(['auth_url' => isset($auth_url) ? $auth_url : null]);
     }
     
+    public function update(Survey $survey, Request $request)
+    {
+        dd($survey);
+    }
+    
     public function test(Request $request)
     {
-        
+        session()->forget('upload_token');
         $form_service = new FormsAPIService('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk', $request->url());
         
         if (!empty($request->get('code'))) {
@@ -63,7 +69,7 @@ class GoogleFormsController extends Controller
         if ($form_service->client->getAccessToken()) {
             // dd($client->getAccessToken());
             $data = $form_service->get_answers_by_user();
-            // $data = $form_service->get_questions();
+            $data = $form_service->get_questions();
             dd($data);
         }
 
