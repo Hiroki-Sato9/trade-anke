@@ -32,7 +32,7 @@ class GoogleFormsController extends Controller
             return redirect($url);
         } else {
             session()->put('redirect_url', url()->previous());
-            // dd($form_service->client);
+            dd(session('redirect_url'));
             session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
             $auth_url = $form_service->client->createAuthUrl();
 
@@ -55,14 +55,22 @@ class GoogleFormsController extends Controller
         $form_service->client->setAccessToken(session('upload_token'));
         if ($form_service->client->isAccessTokenExpired()) {
             session()->forget('upload_token');
+        } else {
+            
         }
+        
+        // 質問の保存処理
         $questions = $form_service->get_questions();
         $question_models = [];
         foreach ($questions as $key => $value) {
-            $question_models[] = new Question(['body' => $value]);
+            $question_models[$key] = new Question(['body' => $value]);
         }
-        $survey->saveMany($question_models);
+        dd($question_models);
+        $survey->saveMany(array_values($question_models));
+        
+        // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
+        
     }
     
     public function test(Request $request)

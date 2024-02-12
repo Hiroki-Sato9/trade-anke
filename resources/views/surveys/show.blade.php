@@ -3,7 +3,11 @@
     <div class="py-12">
     <div class="survey max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h1 class="text-5xl">{{ $survey->title }}</h1>
-        <a href="{{ route('forms.connect')) }}"></a>
+        <form action="{{ route('forms.update', ['survey' => $survey->id]) }}" method="post" class="">
+            @method('patch')
+            @csrf
+            <input type="submit" value="Formsからアンケート結果を取得する"></input>
+        </form>
          <div class="bg-white shadow-sm p-6">
             <h2 class="text-3xl">概要</h2>
             <p>{{ $survey->description }}</p>
@@ -17,6 +21,9 @@
         </div>
         <div class="bg-white shadow-sm p-6">
         <h2 class="text-3xl">アンケートの内容</h2>
+            @if ($survey->is_form_survey())
+                <p class="text-red-500">このアンケートは、Google Formsと連動しています</p>
+            @endif
             <ul class="space-y-1">
             @foreach ($survey->questions as $question)
                 <li>

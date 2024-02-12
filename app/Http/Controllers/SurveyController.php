@@ -37,25 +37,25 @@ class SurveyController extends Controller
     
     public function show(Survey $survey, Request $request)
     {
-        if ($survey->is_form_survey()) {
-            $form_service = new FormsAPIService('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
-            // アクセストークンを保持しているか
-            if ($form_service->can_set_token()) {
-                // アクセストークンをセットして、アンケート結果の取得処理
-                // $form_service->set_access_token();
-                $form_service->client->setAccessToken(session('upload_token'));
-                if ($form_service->client->isAccessTokenExpired()) {
-                    session()->forget('upload_token');
-                }
-                $data = $form_service->get_questions();
-                dd($data);
-            } else {
-                // connectアクションへリダイレクト
-                return redirect()->route('forms.connect');
-            }
-        } else {
+        // if ($survey->is_form_survey()) {
+        //     $form_service = new FormsAPIService('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
+        //     // アクセストークンを保持しているか
+        //     if ($form_service->can_set_token()) {
+        //         // アクセストークンをセットして、アンケート結果の取得処理
+        //         // $form_service->set_access_token();
+        //         $form_service->client->setAccessToken(session('upload_token'));
+        //         if ($form_service->client->isAccessTokenExpired()) {
+        //             session()->forget('upload_token');
+        //         }
+        //         $data = $form_service->get_questions();
+        //         dd($data);
+        //     } else {
+        //         // connectアクションへリダイレクト
+        //         return redirect()->route('forms.connect');
+        //     }
+        // } else {
             
-        }
+        // }
         
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
         $answers_by_user = [];
