@@ -9,6 +9,7 @@ use Google_Service_Forms;
 
 use App\Services\FormsAPIService;
 use App\Models\Survey;
+use App\Models\Question;
 
 class GoogleFormsController extends Controller
 {
@@ -32,7 +33,6 @@ class GoogleFormsController extends Controller
             return redirect($url);
         } else {
             session()->put('redirect_url', url()->previous());
-            dd(session('redirect_url'));
             session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
             $auth_url = $form_service->client->createAuthUrl();
 
@@ -65,8 +65,8 @@ class GoogleFormsController extends Controller
         foreach ($questions as $key => $value) {
             $question_models[$key] = new Question(['body' => $value]);
         }
-        dd($question_models);
-        $survey->saveMany(array_values($question_models));
+        // dd(array_values($question_models));
+        $survey->questions()->saveMany(array_values($question_models));
         
         // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
