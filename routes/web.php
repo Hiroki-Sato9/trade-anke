@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     
     // Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     // Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
+    Route::delete('/surveys/{survey}', [SurveyController::class, 'delete'])->name('surveys.delete');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::post('/surveys', [SurveyController::class, 'store']);
     Route::get('/export', [SurveyController::class, 'export']);

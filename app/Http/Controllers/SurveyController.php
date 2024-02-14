@@ -102,6 +102,12 @@ class SurveyController extends Controller
         return redirect('/surveys/' . $survey->id);
     }
     
+    public function delete(Survey $survey, Request $request)
+    {
+        $survey->delete();
+        return redirect('profile.detail');
+    }
+    
     public function deliver(Request $request)
     {
         // 何人に配布するか

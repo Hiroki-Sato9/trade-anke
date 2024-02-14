@@ -3,11 +3,20 @@
     <div class="py-12">
     <div class="survey max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 mb-4">
         <h1 class="text-5xl">{{ $survey->title }}</h1>
-        <form action="{{ route('forms.update', ['survey' => $survey->id]) }}" method="post" class="">
-            @method('patch')
-            @csrf
-            <input type="submit" value="Formsからアンケート結果を取得する"></input>
-        </form>
+        @if ($survey->is_form_survey())
+            <form action="{{ route('forms.update', ['survey' => $survey->id]) }}" method="post" class="">
+                @method('patch')
+                @csrf
+                <input type="submit" value="Formsからアンケート結果を取得する"></input>
+            </form>
+        @endif
+        @if (Auth::user()->is($survey->user))
+            <form action="{{ route('surveys.delete', ['survey' => $survey->id])}}" method="post">
+                @csrf
+                @method('delete')
+                <input type="submit" value="アンケートを削除する" />
+            </form>
+        @endif
          <div class="bg-white shadow-sm p-6">
             <h2 class="text-3xl">概要</h2>
             <p>{{ $survey->description }}</p>
