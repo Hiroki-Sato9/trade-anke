@@ -10,6 +10,7 @@ use Google_Service_Forms;
 use App\Services\FormsAPIService;
 use App\Models\Survey;
 use App\Models\Question;
+use App\Models\Answer;
 
 class GoogleFormsController extends Controller
 {
@@ -70,7 +71,22 @@ class GoogleFormsController extends Controller
         
         // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
-        
+        foreach ($answers_by_user as $answer_data) {
+            if (is_null(User::where('email', $answer_data['email']))) {
+                continue;
+            }
+            // クエリが無駄に発生している？
+            $user = User::where('email', $answer_data['email'])->first();
+            foreach ($answer_data['answers'] as $question_form_id => $body) {
+                $question = $question_models[$question_form_id]->fresh();
+                $answer = new Answer([
+                    'user_id' => $user->id,
+                    'body' => $body,
+                ]);
+                $question->answers()->save($answer);
+            }
+        }
+        return redirect('/');
     }
     
     public function test(Request $request)
