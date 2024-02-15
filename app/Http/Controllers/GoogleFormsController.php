@@ -62,18 +62,23 @@ class GoogleFormsController extends Controller
         }
         
         // 質問の保存処理
-        $questions = $form_service->get_questions();
-        $question_models = [];
-        foreach ($questions as $key => $value) {
-            $question_models[$key] = new Question(['body' => $value]);
+        if ($survey->questions->isEmpty()) {
+            $questions = $form_service->get_questions();
+            $question_models = [];
+            foreach ($questions as $key => $value) {
+                $question_models[$key] = new Question(['body' => $value]);
+            }
+            // dd(array_values($question_models));
+            $survey->questions()->saveMany(array_values($question_models));
         }
-        // dd(array_values($question_models));
-        $survey->questions()->saveMany(array_values($question_models));
         
         // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
         foreach ($answers_by_user as $answer_data) {
             if (!User::where('email', $answer_data['email'])->exists()) {
+                continue;
+            }
+            if (count($answer_data['answers']) != count(question_models)) {
                 continue;
             }
             // クエリが無駄に発生している？
