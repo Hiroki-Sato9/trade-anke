@@ -8,6 +8,7 @@ use Google_client;
 use Google_Service_Forms;
 
 use App\Services\FormsAPIService;
+use App\Models\User;
 use App\Models\Survey;
 use App\Models\Question;
 use App\Models\Answer;
@@ -72,7 +73,7 @@ class GoogleFormsController extends Controller
         // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
         foreach ($answers_by_user as $answer_data) {
-            if (is_null(User::where('email', $answer_data['email']))) {
+            if (!User::where('email', $answer_data['email'])->exists()) {
                 continue;
             }
             // クエリが無駄に発生している？
@@ -81,18 +82,18 @@ class GoogleFormsController extends Controller
                 $question = $question_models[$question_form_id]->fresh();
                 $answer = new Answer([
                     'user_id' => $user->id,
-                    'body' => $body,
+                    'body' => $body[0],
                 ]);
                 $question->answers()->save($answer);
             }
         }
-        return redirect('/');
+        return redirect()->route('surveys.show', ['survey' => $survey->id]);
     }
     
     public function test(Request $request)
     {
-        session()->forget('upload_token');
-        $form_service = new FormsAPIService('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk', $request->url());
+        // session()->forget('upload_token');
+        $form_service = new FormsAPIService('1bHVxZjWPrQKUwdwB6aa_849DPlSKXdiIaj9SlABpe_0', $request->url());
         
         if (!empty($request->get('code'))) {
             $token = $form_service->client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
@@ -113,7 +114,7 @@ class GoogleFormsController extends Controller
         if ($form_service->client->getAccessToken()) {
             // dd($client->getAccessToken());
             $data = $form_service->get_answers_by_user();
-            $data = $form_service->get_questions();
+            // $data = $form_service->get_questions();
             dd($data);
         }
 

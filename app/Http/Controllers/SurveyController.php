@@ -63,7 +63,6 @@ class SurveyController extends Controller
             $answers_by_user = Answer::answers_by_user($survey);
         }
         
-        
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),
@@ -105,7 +104,7 @@ class SurveyController extends Controller
     public function delete(Survey $survey, Request $request)
     {
         $survey->delete();
-        return redirect('profile.detail');
+        return redirect()->route('profile.detail');
     }
     
     public function deliver(Request $request)
