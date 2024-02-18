@@ -47,6 +47,11 @@
                         <x-text-input id="form_url" class="block mt-1 w-full" type="text" name="survey[form_url]" :value="old('survey.form_url')" autofocus autocomplete="name" />
                         <x-input-error :messages="$errors->get('survey.form_url')" class="mt-2" />
                     </div>
+                    <div>
+                        <x-input-label for="form_url" :value="__('Google Formの共有URL')" />
+                        <x-text-input id="form_url" class="block mt-1 w-full" type="text" name="survey[form_url]" :value="old('survey.form_share_url')" autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('survey.form_share_url')" class="mt-2" />
+                    </div>
                 </div>
                 <div class="default_form">
                     <div class="questions">

@@ -87,6 +87,7 @@ class SurveyController extends Controller
         if ($survey_input['form_url']) {
             $url = $survey_input['form_url'];
             $survey->form_id = FormsAPIService::get_form_id($url);
+            $survey->form_share_url = $survey_input['form_share_url'];
             $survey->save();
         } else {
             $question_models = [];
