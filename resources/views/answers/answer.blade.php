@@ -16,7 +16,7 @@
         </div>
        
        <h2 class="text-3xl">アンケートに回答してください</h2>
-       <form method="post" action="/answers" class="">
+       <form method="post" action="{{ route('answers.store', ['survey' => $survey->id]) }}" class="">
             @csrf
             @if (!$survey->is_form_survey())
                 @foreach ($survey->questions as $question)
@@ -30,7 +30,7 @@
                 @endforeach
             @else
             @endif
-                <div id="form_container" data-id="{{ $survey->form_id }}"></div>
+                <div id="form_container" data-url="{{ $survey->form_share_url }}"></div>
             <x-primary-button class="ml-4">
                 {{ __('回答') }}
             </x-primary-button>

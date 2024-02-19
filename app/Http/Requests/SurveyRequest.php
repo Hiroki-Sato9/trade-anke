@@ -31,8 +31,9 @@ class SurveyRequest extends FormRequest
             'survey.gender_id' => 'required',
             'survey.min_age' => 'required|integer',
             'survey.max_age' => "required|integer|min:{$this['survey']['min_age']}",
-            'survey.form_url' => 'exclude_unless:question_type,forms_type|required|url',
             'question_type' => 'required',
+            'survey.form_url' => 'exclude_unless:question_type,forms_type|required|url',
+            'survey.form_url' => 'exclude_unless:question_type,forms_type|required|url',
             'question' => 'exclude_unless:question_type,default_type|required|array',
             'question.*.body' => 'exclude_unless:question_type,default_type|required|min:3',
         ];

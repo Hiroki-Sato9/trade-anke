@@ -1,8 +1,7 @@
 
 // Google FormのIFrameのDOM要素を返す
-function getIFrame(formId) {
-    const src = 'https://docs.google.com/forms/d/e' 
-        + formId + '/viewform?embedded=true';
+function getIFrame(formUrl) {
+    const src = formUrl + '?'
     const frame = document.createElement('iframe');
     frame.setAttribute('src', src);
     frame.setAttribute('width', '640');
@@ -14,8 +13,8 @@ function getIFrame(formId) {
 
 if (document.querySelector('#form_container')) {
     const formContainer = document.querySelector('#form_container');
-    const formId = formContainer.getAttribute("data-id");
+    const formUrl = formContainer.getAttribute("data-url");
     
-    const frame = getIFrame(formId);
+    const frame = getIFrame(formUrl);
     formContainer.appendChild(frame);
 }

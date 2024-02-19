@@ -62,7 +62,7 @@ class SurveyController extends Controller
         if ($request->user() && $request->user()->is($survey->user)){
             $answers_by_user = Answer::answers_by_user($survey);
         }
-        
+        dump($survey);
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),
@@ -87,7 +87,7 @@ class SurveyController extends Controller
         if ($survey_input['form_url']) {
             $url = $survey_input['form_url'];
             $survey->form_id = FormsAPIService::get_form_id($url);
-            $survey->form_share_url = $survey_input['form_share_url'];
+            $survey->form_share_url =  strtok($survey_input['form_share_url'], '?');
             $survey->save();
         } else {
             $question_models = [];
@@ -98,7 +98,7 @@ class SurveyController extends Controller
         }
         
         $request->user()->profile->add_point(-1);
-    
+        
         return redirect('/surveys/' . $survey->id);
     }
     

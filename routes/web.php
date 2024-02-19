@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/export', [SurveyController::class, 'export']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
-    Route::post('/answers', [AnswerController::class, 'store']);
+    Route::post('/answers/{survey}', [AnswerController::class, 'store'])->name('answers.store');
     
     Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request'])->name('interviews.request');
     Route::put('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept'])->name('interviews.accept');
