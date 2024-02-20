@@ -29,8 +29,8 @@
                     </div>
                 @endforeach
             @else
-            @endif
                 <div id="form_container" data-url="{{ $survey->form_share_url }}"></div>
+            @endif
             <x-primary-button class="ml-4">
                 {{ __('回答') }}
             </x-primary-button>

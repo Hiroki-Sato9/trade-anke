@@ -65,7 +65,9 @@ class User extends Authenticatable
     
     public function delivered_surveys()
     {
-        return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id')->using(Delivered::class);
+        return $this->belongsToMany(Survey::class, 'delivered', 'user_id', 'survey_id')
+            ->using(Delivered::class)
+            ->withPivot('is_answered');
     }
     
     // ユーザの性別名を返す

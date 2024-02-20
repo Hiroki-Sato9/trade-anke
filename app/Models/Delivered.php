@@ -9,6 +9,8 @@ class Delivered extends Pivot
 {
     use HasFactory;
     
+    protected $casts = ['is_answered' => 'boolean'];
+    
     // public function user()
     // {
     //     return $this->belongsTo(User::class);
