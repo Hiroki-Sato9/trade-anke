@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('delivered', function (Blueprint $table) {
             //
-            $table->text('body')->change();
+            $table->boolean('is_answered')->default(false);
         });
     }
 
@@ -26,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('delivered', function (Blueprint $table) {
             //
+            $table->dropColumn('is_answered');
         });
     }
 };
