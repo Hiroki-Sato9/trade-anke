@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\Answer;
 use App\Models\Survey;
 use App\Models\Question;
+use App\Models\Delivered;
 
 class AnswerController extends Controller
 {
@@ -35,6 +36,12 @@ class AnswerController extends Controller
                 $question->survey->save();
             }
         }
+        // Deliveredモデルの取得・更新
+        $delivered = Delivered::where('user_id', $request->user()->id)
+            ->where('survey_id', $survey->id)->first();
+        $delivered->is_answered = true;
+        $delivered->save();
+        
         $request->user()->profile->add_point(10);
         return redirect('/profile/');
     }
