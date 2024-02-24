@@ -29,7 +29,15 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $answered_surveys = Survey::answered_by_user($user->id);
-        $delivered_surveys = $user->delivered_surveys->diff($answered_surveys);
+        // $delivered_surveys = $user->delivered_surveys->diff($answered_surveys);
+        $delivered_surveys = $user->delivered_surveys->filter(function ($value, $key) {
+            return $value->pivot->is_answered == false;
+        });
+        // $arr = [];
+        // foreach ($user->delivered_surveys as $survey) {
+        //     $arr[] = $survey->pivot;
+        // }
+        // dd($delivered_surveys);
         
         return view('profile.detail', [
             'user' => $user,

@@ -41,7 +41,7 @@ class AnswerController extends Controller
             ->where('survey_id', $survey->id)->first();
         $delivered->is_answered = true;
         $delivered->save();
-        
+
         $request->user()->profile->add_point(10);
         return redirect('/profile/');
     }
