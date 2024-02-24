@@ -23,7 +23,7 @@ class SurveyRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this['survey']);
+        // dd($this);
         return [
             'survey.title' => 'required',
             'survey.description' => 'required',
@@ -31,8 +31,20 @@ class SurveyRequest extends FormRequest
             'survey.gender_id' => 'required',
             'survey.min_age' => 'required|integer',
             'survey.max_age' => "required|integer|min:{$this['survey']['min_age']}",
-            'question' => 'required|array',
-            'question.*.body' => 'required|min:3',
+            'question_type' => 'required',
+            'survey.form_url' => 'exclude_unless:question_type,forms_type|required|url',
+            'survey.form_url' => 'exclude_unless:question_type,forms_type|required|url',
+            'question' => 'exclude_unless:question_type,default_type|required|array',
+            'question.*.body' => 'exclude_unless:question_type,default_type|required|min:3',
         ];
     }
+    
+    // public function withValidator($validator)
+    // {
+    //     $form_url = $this->input('survey.form_url');
+    //     $question = $this->input('question');
+    //     $validator->after(function ($validator) {
+            
+    //     });
+    // }
 }

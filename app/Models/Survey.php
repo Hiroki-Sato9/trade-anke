@@ -69,6 +69,12 @@ class Survey extends Model
         return $users;
     }
     
+    // Google Form を用いたアンケートかどうか
+    public function is_form_survey()
+    {
+        return !is_null($this->form_id);
+    }
+    
     // アンケートが、ユーザに配布可能か？
     public function is_allowed_to_deliver($user)
     {

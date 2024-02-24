@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\InterviewRequestController;
+use App\Http\Controllers\GoogleFormsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,12 +41,13 @@ Route::middleware('auth')->group(function () {
     
     // Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index');
     // Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
+    Route::delete('/surveys/{survey}', [SurveyController::class, 'delete'])->name('surveys.delete');
     Route::get('/surveys/create', [SurveyController::class, 'create'])->name('surveys.create');
     Route::post('/surveys', [SurveyController::class, 'store']);
     Route::get('/export', [SurveyController::class, 'export']);
     
     Route::get('/answers/{survey}', [AnswerController::class, 'create']);
-    Route::post('/answers', [AnswerController::class, 'store']);
+    Route::post('/answers/{survey}', [AnswerController::class, 'store'])->name('answers.store');
     
     Route::post('/interviews/request/{survey}', [InterviewRequestController::class, 'request'])->name('interviews.request');
     Route::put('/interviews/accept/{survey}', [InterviewRequestController::class, 'accept'])->name('interviews.accept');
@@ -66,3 +68,7 @@ Route::get('/surveys', [SurveyController::class, 'index'])->name('surveys.index'
 Route::get('/surveys/{survey}', [SurveyController::class, 'show'])->name('surveys.show');
 
 require __DIR__.'/auth.php';
+
+Route::get('/forms/test', [GoogleFormsController::class, 'test']);
+Route::get('/forms/connect', [GoogleFormsController::class, 'connect'])->name('forms.connect');
+Route::patch('/forms/{survey}', [GoogleFormsController::class, 'update'])->name('forms.update');

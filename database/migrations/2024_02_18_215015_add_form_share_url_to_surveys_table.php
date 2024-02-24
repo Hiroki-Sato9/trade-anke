@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('surveys', function (Blueprint $table) {
             //
-            $table->text('body')->change();
+            $table->string('form_share_url')->nullable();
         });
     }
 
@@ -26,8 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('surveys', function (Blueprint $table) {
             //
+            $table->dropColumn('form_share_url');
         });
     }
 };

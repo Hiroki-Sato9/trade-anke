@@ -13,7 +13,7 @@ use App\Http\Requests\SurveyRequest;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-
+use App\Services\FormsAPIService;
 
 class SurveyController extends Controller
 {
@@ -37,12 +37,32 @@ class SurveyController extends Controller
     
     public function show(Survey $survey, Request $request)
     {
+        // if ($survey->is_form_survey()) {
+        //     $form_service = new FormsAPIService('1-fLk6OQWXuQswmxohkYs9U3W304SF81IDg4rOWMBWPk');
+        //     // アクセストークンを保持しているか
+        //     if ($form_service->can_set_token()) {
+        //         // アクセストークンをセットして、アンケート結果の取得処理
+        //         // $form_service->set_access_token();
+        //         $form_service->client->setAccessToken(session('upload_token'));
+        //         if ($form_service->client->isAccessTokenExpired()) {
+        //             session()->forget('upload_token');
+        //         }
+        //         $data = $form_service->get_questions();
+        //         dd($data);
+        //     } else {
+        //         // connectアクションへリダイレクト
+        //         return redirect()->route('forms.connect');
+        //     }
+        // } else {
+            
+        // }
+        
         // アクセスしたユーザーがこのアンケートの作成者ならば、回答一覧を表示する
         $answers_by_user = [];
         if ($request->user() && $request->user()->is($survey->user)){
             $answers_by_user = Answer::answers_by_user($survey);
         }
-        
+        dump($answers_by_user);
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),
@@ -62,16 +82,30 @@ class SurveyController extends Controller
         
         $survey->fill($survey_input);
         $request->user()->surveys()->save($survey);
-        
-        $question_models = [];
-        foreach ($question_input as $question){
-            array_push($question_models, new Question($question));
+
+        // Google Formsを利用する場合とそれ以外の処理
+        if ($survey_input['form_url']) {
+            $url = $survey_input['form_url'];
+            $survey->form_id = FormsAPIService::get_form_id($url);
+            $survey->form_share_url =  strtok($survey_input['form_share_url'], '?');
+            $survey->save();
+        } else {
+            $question_models = [];
+            foreach ($question_input as $question){
+                array_push($question_models, new Question($question));
+            }
+            $survey->questions()->saveMany($question_models);
         }
-        $survey->questions()->saveMany($question_models);
         
         $request->user()->profile->add_point(-1);
-    
+        
         return redirect('/surveys/' . $survey->id);
+    }
+    
+    public function delete(Survey $survey, Request $request)
+    {
+        $survey->delete();
+        return redirect()->route('profile.detail');
     }
     
     public function deliver(Request $request)
