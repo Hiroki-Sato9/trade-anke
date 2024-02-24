@@ -62,7 +62,7 @@ class SurveyController extends Controller
         if ($request->user() && $request->user()->is($survey->user)){
             $answers_by_user = Answer::answers_by_user($survey);
         }
-        dump($survey);
+        dump($answers_by_user);
         return view('surveys.show')
             ->with(['survey' => $survey,
                     'gender' => DB::table('genders')->find($survey->gender_id),

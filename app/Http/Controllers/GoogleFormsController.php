@@ -61,30 +61,38 @@ class GoogleFormsController extends Controller
             
         }
         
+        $question_models = [];
         // 質問の保存処理
+        $questions = $form_service->get_questions();
         if ($survey->questions->isEmpty()) {
-            $questions = $form_service->get_questions();
-            $question_models = [];
             foreach ($questions as $key => $value) {
                 $question_models[$key] = new Question(['body' => $value]);
             }
             // dd(array_values($question_models));
             $survey->questions()->saveMany(array_values($question_models));
+        } else {
+            foreach ($questions as $key => $value) {
+                // Forms側で質問が変更されたとき、エラーになるS
+                $question_models[$key] = Question::where('body', $value)->first();
+            }
         }
         
         // 回答の保存処理
         $answers_by_user = $form_service->get_answers_by_user();
+        // dd($answers_by_user);
         foreach ($answers_by_user as $answer_data) {
             if (!User::where('email', $answer_data['email'])->exists()) {
                 continue;
             }
-            if (count($answer_data['answers']) != count(question_models)) {
+            if (count($answer_data['answers']) != count($survey->questions)) {
                 continue;
             }
+            
             // クエリが無駄に発生している？
             $user = User::where('email', $answer_data['email'])->first();
             foreach ($answer_data['answers'] as $question_form_id => $body) {
                 $question = $question_models[$question_form_id]->fresh();
+                // すでに答えたユーザの回答なら、無視する
                 $answer = new Answer([
                     'user_id' => $user->id,
                     'body' => $body[0],
