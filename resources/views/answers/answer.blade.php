@@ -30,6 +30,7 @@
                 @endforeach
             @else
                 <div id="form_container" data-url="{{ $survey->form_share_url }}"></div>
+                <p>回答フォームが表示されない場合は<a href="{{ $survey->form_share_url }}?usp=sf_link">こちら</a></p>
             @endif
             <x-primary-button class="ml-4">
                 {{ __('回答') }}

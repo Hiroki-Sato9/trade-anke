@@ -19,29 +19,30 @@ class GoogleFormsController extends Controller
     // トークンをクライアントにセットするのはそれぞれのアクション内で行われる
     public function connect(Request $request)
     {
-        
         $form_service = new FormsAPIService();
-        
-        if (!empty($request->get('code'))) {
-            $token = $form_service->client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
-            session(['upload_token' => $token]);
-            // header('Location: ' . filter_var($form_service->redirect_uri, FILTER_SANITIZE_URL));
-        } 
-        
-        if ($form_service->can_set_token()) {
-            $url = session('redirect_url');
-            session()->forget('redirect_url');
-            // 元のアクションへリダイレクト
-            return redirect($url);
-        } else {
-            session()->put('redirect_url', url()->previous());
-            session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
-            $auth_url = $form_service->client->createAuthUrl();
-
-            return redirect($auth_url);
+        try {
+            if (!empty($request->get('code'))) {
+                $token = $form_service->client->fetchAccessTokenWithAuthCode($request->get('code'), session('code_verifier'));
+                session(['upload_token' => $token]);
+                // header('Location: ' . filter_var($form_service->redirect_uri, FILTER_SANITIZE_URL));
+            } 
+            
+            if ($form_service->can_set_token()) {
+                $url = session('redirect_url');
+                session()->forget('redirect_url');
+                // 元のアクションへリダイレクト
+                return redirect($url);
+            } else {
+                session()->put('redirect_url', url()->previous());
+                session()->put('code_verifier', $form_service->client->getOAuth2Service()->generateCodeVerifier());
+                $auth_url = $form_service->client->createAuthUrl();
+    
+                return redirect($auth_url);
+            }
+        } catch (Google_Service_Exception $e) {
+            session()->flash('flash_message', "Google Formsとの連携でエラーが生じました。");
+            return rediect()->name('dashboard');
         }
-        // return view('static_pages.test')
-        //     ->with(['auth_url' => isset($auth_url) ? $auth_url : null]);
     }
     
     public function update(Survey $survey, Request $request)
@@ -60,10 +61,16 @@ class GoogleFormsController extends Controller
         } else {
             
         }
+        try {
+            $questions = $form_service->get_questions();
+            $answers_by_user = $form_service->get_answers_by_user();
+        } catch (\Google\Service\Exception | Google\Exception | Exception $e) {
+            session()->flash('flash_message', "Google Formsとの連携でエラーが生じました。");
+            return redirect()->route('dashboard');
+        }
         
         $question_models = [];
         // 質問の保存処理
-        $questions = $form_service->get_questions();
         if ($survey->questions->isEmpty()) {
             foreach ($questions as $key => $value) {
                 $question_models[$key] = new Question(['body' => $value]);
@@ -78,7 +85,6 @@ class GoogleFormsController extends Controller
         }
         
         // 回答の保存処理
-        $answers_by_user = $form_service->get_answers_by_user();
         // dd($answers_by_user);
         foreach ($answers_by_user as $answer_data) {
             if (!User::where('email', $answer_data['email'])->exists()) {

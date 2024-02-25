@@ -30,7 +30,7 @@
         <h3 class="text-xl pb-2.5 border-b-2 border-solid border-gray-600">質問事項</h3>
         <p>Google Formsを利用する場合は、「Google Formsを利用する」にチェックを付けて、配布したいフォームのURLを入力してください。</p>
         <div class="mb-4">
-            <div>
+            <div class="mb-3">
                 <div>
                     <input type="radio" id="default_type" name="question_type" value="default_type" checked>
                     <label for="default_type">アンケートを一から作る</label>
@@ -43,12 +43,12 @@
             <div class="">
                 <div class="google-forms hidden">
                     <div>
-                        <x-input-label for="form_url" :value="__('Google FormのURL')" />
+                        <x-input-label for="form_url" :value="__('Google FormのURL（editで終わるもの）')" />
                         <x-text-input id="form_url" class="block mt-1 w-full" type="text" name="survey[form_url]" :value="old('survey.form_url')" autofocus autocomplete="name" />
                         <x-input-error :messages="$errors->get('survey.form_url')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="form_share_url" :value="__('Google Formの共有URL')" />
+                        <x-input-label for="form_share_url" :value="__('Google Formの共有URL（送信ボタンを押して得られるもの）')" />
                         <x-text-input id="form_share_url" class="block mt-1 w-full" type="text" name="survey[form_share_url]" :value="old('survey.form_share_url')" autofocus autocomplete="name" />
                         <x-input-error :messages="$errors->get('survey.form_share_url')" class="mt-2" />
                     </div>
