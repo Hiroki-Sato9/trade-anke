@@ -49,7 +49,7 @@ class FormsAPIService
     public function set_access_token()
     {
         if ($this->can_set_token() && !$this->client->getAccessToken()) {
-            dd(session('upload_token'));
+            // dd(session('upload_token'));
             $this->client->setAccessToken(session('upload_token'));
             if ($this->client->isAccessTokenExpired()) {
                 session()->forget('upload_token');
@@ -62,6 +62,7 @@ class FormsAPIService
     {
         $items = $this->service->forms->get($this->form_id)
             ->getItems();
+        
         $questions = [];
         foreach ($items as $item) {
             $question_id = $item->getQuestionItem()->getQuestion()->questionId;
@@ -75,7 +76,7 @@ class FormsAPIService
     {
         $responses = $this->service->forms_responses->listFormsResponses($this->form_id)
             ->getResponses();
-            
+          
         //Answer[]
         $answers = [];
         foreach ($responses as $response) {
