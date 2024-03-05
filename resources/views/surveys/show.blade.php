@@ -10,16 +10,18 @@
                 <input type="submit" value="Formsからアンケート結果を取得する"></input>
             </form>
         @endif
-        @if (Auth::user()->is($survey->user))
-            <form action="{{ route('surveys.delete', ['survey' => $survey->id])}}" method="post">
-                @csrf
-                @method('delete')
-                <!--<input type="submit" value="アンケートを削除する" />-->
-                <button type="submit" class="bg-slate-500 hover:bg-slate-400 text-white font-medium py-1 px-2 rounded focus:outline-none focus:shadow-outline" type="button">
-                    アンケートを削除する
-                </button>
-            </form>
-        @endif
+        @auth
+            @if (Auth::user()->is($survey->user))
+                <form action="{{ route('surveys.delete', ['survey' => $survey->id])}}" method="post">
+                    @csrf
+                    @method('delete')
+                    <!--<input type="submit" value="アンケートを削除する" />-->
+                    <button type="submit" class="bg-slate-500 hover:bg-slate-400 text-white font-medium py-1 px-2 rounded focus:outline-none focus:shadow-outline" type="button">
+                        アンケートを削除する
+                    </button>
+                </form>
+            @endif
+        @endauth
          <div class="bg-white shadow-sm p-6">
             <h2 class="text-3xl">概要</h2>
             <p>{{ $survey->description }}</p>

@@ -25,7 +25,7 @@ class InterviewRequestController extends Controller
             $interview_request->requested_user_id = $request['requested_user'];
             $survey->interview_request()->save($interview_request);
             
-            session()->flash('flash_message', '{$survey->title}のインタビューをリクエストしました');
+            session()->flash('flash_message', "{$survey->title}のインタビューをリクエストしました");
         }
         
         return redirect()->back();
@@ -47,7 +47,6 @@ class InterviewRequestController extends Controller
     {
         $posts = $survey->interview_request->posts;
         return view('interviews.show', [
-            'user' => $request->user,
             'posts' => $posts,
             'survey' => $survey,
         ]);
