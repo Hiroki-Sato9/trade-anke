@@ -1,66 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# アンケート交換サービス Trade-Anke
+## 概要
+ユーザー同士で、作成したアンケートを答え合うサービスです。作成したアンケートを配布することができますが、自分のアンケートを回答してもらうためには、誰かのアンケートを回答しなければならない仕組みです。
 
-## About Laravel
+## 作成背景
+　私が大学で社会調査について勉強した際、一番に感じたのはアンケート調査のハードルの高さです。特に個人で行うアンケートは、回答者が偏った集団になってしまったり、そもそも十分な人数を確保できなくなくなり、アンケート調査として信頼性の低いものになってしまうでしょう。
+　この問題を解決するために、このサービスを作りました。このサービスの特徴は、自分で作成したアンケートを配るためには、まず配られた他人のアンケートに回答してポイントをゲットしなければならないという点です。そうしてポイントをゲットできれば、配る人数・年代・性別を指定して、アンケートを配布することができます。
+　こうしてアンケート調査を行い人たちが集まって、その人たち同士でアンケートを交換しあうしくみがあれば、アンケート調査のハードルを下げることが出来るのではないかと考え、このサービスを作ることにしました。
+## URL
+https://trade-anke-988ccc2cf047.herokuapp.com/
+## テストアカウント
+- Email:    test@example.com
+- Password: password
+## 機能一覧
+### アンケート管理
+- アンケートの取扱い（作成・詳細確認・削除）機能
+- アンケート配布機能
+- アンケート結果の確認機能
+### インタビュー機能
+- 回答者へインタビューができる機能
+- インタビュー結果の確認機能
+### 外部連携
+- Google Formsとの連携（Formsで作ったアンケートを配布することができる）
+### その他
+- 認証機能
+- アンケート結果をCSV出力する機能
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 注力した・苦労した点
+### Google Forms APIとの連携
+　Google Forms APIの取扱いは、まず日本語での情報が少なく、公式ドキュメントやサンプルコードを読みながら自分の求める機能を作っていくことが大変でした。
+　それに加えて、Forms APIはOAuthによる認証が必要なので、その仕組みから学習することに苦労しました。
+### 複雑なテーブルの取り扱い
+　アンケートとその回答を表現するのに、surveys, questions, answersの3つのテーブルを作成したのですが、「あるアンケートの回答を、ユーザーごとにまとめて取得したい」といったようなときに、どのような処理を書けばいいか、戸惑う部分がありました。
+### インタビュー機能の実装
+　本サービスにおけるインタビュー機能は、アンケート作成者によるインタビュー申請→回答者による承諾という流れになっているので、この流れを実現するためにテーブルを作成したり、フロントエンドでの工夫をすることに注力をしました。
+### ユーザ視点での工夫
+　　
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 使用技術
+### バックエンド
+- PHP 8.1.25
+- Laravel 9
+- Google APIs Client Library for PHP
+- MariaDB
+### フロントエンド
+- JavaScript
+- HTML/CSS(TailWind CSS)
+### その他
+- Cloud9（開発環境）
+- Heroku（デプロイ)
